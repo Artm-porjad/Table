@@ -1,0 +1,50 @@
+version: '3.2'
+
+networks:
+  test1:
+    external: true
+
+services:
+  postgresql:
+    image: postgresql1
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+    container_name: test-postgresql1
+    command: postgres
+    networks:
+      - test1
+
+  #  backend service
+  backend:
+    depends_on:
+      - alembic
+    build:
+      context: .
+      dockerfile: docker/website/Dockerfile
+    container_name: test-backend1
+    networks:
+      - test1
+
+  #  frontend service
+  frontend:
+    depends_on:
+      - backend
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    container_name: test-frontend1
+    networks:
+      - test1
+    ports:
+      - "3000:3000"
+
+  alembic:
+    depends_on:
+      - postgresql
+    build:
+      context: .
+      dockerfile: docker/postgres/alembic/Dockerfile
+    container_name: test-alembic1
+    networks:
+      - test1
