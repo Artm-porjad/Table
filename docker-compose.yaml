@@ -48,3 +48,13 @@ services:
     container_name: test-alembic1
     networks:
       - test1
+
+  alembic_add_data:
+    depends_on:
+      - alembic
+    build:
+      context: .
+      dockerfile: docker/postgres/alembic/alembic_add_data/Dockerfile
+    container_name: test-alembic-add-data1
+    networks:
+      - test1

@@ -1,8 +1,6 @@
 """0000000000
 
 Revision ID: 0000000000
-Revises: 
-Create Date: 2022-08-26 15:49:45.452648
 
 """
 from alembic import op

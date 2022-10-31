@@ -8,4 +8,4 @@ RUN cd /backend && pip install -e .
 
 WORKDIR /backend/common
 
-CMD ["alembic", "upgrade", "0000000018"]
+CMD ["alembic", "upgrade", "0000000019"]
