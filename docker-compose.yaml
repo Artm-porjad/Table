@@ -36,8 +36,11 @@ services:
     container_name: test-frontend1
     networks:
       - test1
+    volumes:
+      - /etc/ssl:/etc/ssl
     ports:
-      - "3000:3000"
+      - "80:80"
+      - "443:443"
 
   alembic:
     depends_on:
