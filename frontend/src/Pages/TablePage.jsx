@@ -5,13 +5,14 @@ import Modal from "../components/Modal";
 import TableData from "../components/Table";
 import Dropdown from "../components/dropDown";
 import { ExportCSV } from "../components/ExportCSV";
+import logo from '../images/logo.svg'
 
 
 
 const data = [
     ['Ссылка из СЭД', 'Куратор АПРФ', 'Направление', 'Фед.проект', 'Тип документа', 'Текущий статус', 'ФОИВ',
     'Название документа', 'Рег. номер МКС в СЭД', 'В дополнение к или взамен (предыстория документа)',
-    'Дата поступления в МКС', 'номер в СЭД', 'Контроль Яцеленко', 'Контроль Чукарин', 'Финансовая оценка, тыс. руб.',
+    'Дата поступления в МКС', 'номер в СЭД', 'Контроль Зам. министра', 'Контроль Чукарин', 'Финансовая оценка, тыс. руб.',
     'Экспертная оценка, тыс. руб.', 'Реквизиты ответа в ведомство', 'Дата ответа в ведомство',
     'Дата подписания (согласования) директором ДКР', 'Осталось ДНЕЙ до подписания Директором ДКР ( - просрок)',
     'Просрочка ответа в ведомство', 'ФИО согласующего сотрудника МЦ (текущий согласующий)',
@@ -124,15 +125,22 @@ const TablePage = () => {
   return (
     <div className="App">
       <div>
-        <Button
-            className="addButton"
-            style={{ margin: "1% 1% 1%"}}
-            onClick={onClick}
-        >
-          <b style={{ paddingRight:"5px" }}>+</b>Добавить новую экспертизу
-        </Button>
+        <img src={ logo } style={{ marginLeft: "10px", marginTop: "10px"}} alt="logo" width="25%"/>
 
-        <ExportCSV csvData={contentFromBase} fileName={fileName} />
+        <h4 style={{ color: "#515153", marginLeft: "1%", marginTop: "1%" }}>Добро пожаловать</h4>
+
+        <div style={{ paddingLeft: "" }} className="flex align-items-end">
+
+          <Button
+              className="addButton"
+              style={{ margin: "1% 1% 1%"}}
+              onClick={onClick}
+          >
+            <b style={{ paddingRight:"5px" }}>+</b>Добавить новую экспертизу
+          </Button>
+
+          <ExportCSV csvData={contentFromBase} fileName={fileName} />
+        </div>
 
         {modal && (
           <Modal id="modal" onClose={onClose} title="Форма карточки">
