@@ -11,9 +11,11 @@
 }
 
 .exelButton{
-    border: #44c2c3 solid 2px !important;
+    /*border: #44c2c3 solid 2px !important;*/
     background-color: white !important;
-    color: #44c2c3 !important;
+    color: #02a0d8 !important;
+    border: solid 2px #02a0d8 !important;
+    /*color: #44c2c3 !important;*/
 }
 
 .exelButton:hover{
@@ -23,8 +25,10 @@
 
 .addButton{
     background-color: white !important;
-    color: #44c2c3 !important;
-    border: #44c2c3 solid 2px !important;
+    /*color: #44c2c3 !important;*/
+    /*border: #44c2c3 solid 2px !important;*/
+    color: #02a0d8 !important;
+    border: solid 2px #02a0d8 !important;
 }
 
 .addButton:hover{
@@ -45,7 +49,11 @@
 
 .outSad{
     background-color: #308EF2 !important;
-    margin-left: 10px!important;
+    margin-left: 1em!important;
+}
+
+.selector{
+    max-width: 296px !important;
 }
 
 .outSad:hover{
@@ -55,6 +63,7 @@
 .container{
     display: flex;
     align-items: flex-end!important;
+    padding-left: 0;
 }
 
 .saveChanges{
@@ -69,6 +78,17 @@
     width: 296px!important;
 }
 
-.th{
-    padding: 0 100px 0 100px !important;
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: #f5f5f5!important;
+    color: var(--bs-table-striped-color);
+}
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    width: 100%;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: 0 !important;
+    margin-right: auto;
+    margin-left: auto;
 }

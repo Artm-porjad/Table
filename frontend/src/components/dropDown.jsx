@@ -54,6 +54,7 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
 
                 {dropValue.length !== 0 &&
                     <Form.Select
+                        className="selector"
                         aria-label="Default select example"
                         onChange={handlerSelect}
                         // onChange={() => setResult(titleDropDown)}

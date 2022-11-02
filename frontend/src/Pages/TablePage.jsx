@@ -125,15 +125,21 @@ const TablePage = () => {
   return (
     <div className="App">
       <div>
-        <img src={ logo } style={{ marginLeft: "10px", marginTop: "10px"}} alt="logo" width="25%"/>
+        <div style={{ display:"flex", alignItems: "center" }}>
+          <img src={ logo } style={{ marginLeft: "10px", marginTop: "10px"}} alt="logo" width="25%"/>
+          <h3 style={{ marginLeft: "15%", color: "#515153" }}>Реестр контроля выполнения экспертиз</h3>
+        </div>
 
-        <h4 style={{ color: "#515153", marginLeft: "1%", marginTop: "1%" }}>Добро пожаловать</h4>
+        {/*<h4 style={{ color: "#515153", marginLeft: "1%", marginTop: "" }}> </h4>*/}
 
-        <div style={{ paddingLeft: "" }} className="flex align-items-end">
+        <div style={{ paddingLeft: "0" }} className="flex align-items-center">
+          <div style={{ display:"flex", alignItems:"center", width:"760px"}}>
+            <h5 style={{ color: "#515153", marginLeft: "1%", marginTop: "1%" }}>Департамент цифровой трансформации и координации бюджетных расходов</h5>
+          </div>
 
           <Button
               className="addButton"
-              style={{ margin: "1% 1% 1%"}}
+              style={{ margin: "1% 1% 1% 5px"}}
               onClick={onClick}
           >
             <b style={{ paddingRight:"5px" }}>+</b>Добавить новую экспертизу
@@ -143,13 +149,13 @@ const TablePage = () => {
         </div>
 
         {modal && (
-          <Modal id="modal" onClose={onClose} title="Форма карточки">
+          <Modal id="modal" onClose={onClose} title="Документ экспертизы">
 
             <Form onSubmit={onSubmit}>
 
               <div className="container">
                 <div id="container_1">
-                  {sad && <Dropdown
+                   <Dropdown
                       title="СЭД ID"
                       data={modalRow[0]}
                       index_column={0}
@@ -158,41 +164,40 @@ const TablePage = () => {
                       content={contentFromBase}
                       dropValue={dropArr[0]}
                       typeArr={typeArr}
-                  />}
+                  />
                 </div>
 
                 <div>
-                  {sad && <Button
+                  <Button
                       className="outSad"
                       variant="primary"
                       type="submit"
                       onClick={onClickHandler}
                   >
-                    Получить документ из СЭД
+                    Обновить данные из СЭД
                   </Button>
-                  }
                 </div>
               </div>
 
-              {modal2 && title.map((nameColumn, key) => {
+              {modal && title.slice(1).map((nameColumn, key) => {
                 return (
                     <Dropdown
                         title={nameColumn}
-                        data={modalRow[key]}
-                        index_column={key}
+                        data={modalRow.slice(1)[key]}
+                        index_column={key+1}
                         index_row={modalRowIndex + 1}
                         key={key}
                         content2={content2}
                         content={contentFromBase}
-                        dropValue={dropArr[key]}
+                        dropValue={dropArr.slice(1)[key]}
                         typeArr={typeArr}
                     />
                 );
               })}
 
-              {modal2 && <Button
+              {modal && <Button
                   className="saveChanges"
-                  style={{marginLeft: "87%"}}
+                  style={{marginLeft: "87%", marginTop: "2%"}}
                   variant="primary"
                   type="submit"
               >

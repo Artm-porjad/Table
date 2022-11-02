@@ -38,7 +38,7 @@ export const ExportCSV = ({ csvData, fileName }) => {
       </style>
       <Button
         className="exelButton"
-        style={{ margin: "1% 1% 1%"}}
+        style={{ margin: "1% 1% 1% 0"}}
         onClick={(e) => exportToCSV(csvData, fileName)}
       >
         Экспортировать в Excel

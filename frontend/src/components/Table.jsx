@@ -5,7 +5,7 @@ const TableData = ({ title, data, setModal, setModalRow, setModalRowIndex }) => 
     return (
         <>
             <Table striped bordered hover variant="light" size="sm">
-                <thead id="th" className="table-primary text-center align-text-top">
+                <thead  id="th" className="table-primary text-center align-text-top">
                     <tr>
                         {title.map((nameColumn, key) => {
                             return <th style={{ backgroundColor: "#394458", color: "white"}}   key={key}>{nameColumn}</th>;
