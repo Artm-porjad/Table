@@ -10,7 +10,7 @@ const Modal = ({ title, onClose, children }) => {
                     onClick={onClose}
                 />
 
-                <div className=" w-[1300px] h-[300%] p-5 rounded bg-white absolute top-2 left-1/2 -translate-x-1/2">
+                <div className=" w-[1300px] h-[2250px] p-5 rounded bg-white absolute top-2 left-1/2 -translate-x-1/2">
                     <div id="closeBtn">
                         <CloseButton onClick={onClose} />
                     </div>

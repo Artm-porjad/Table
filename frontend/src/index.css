@@ -68,6 +68,7 @@
 
 .saveChanges{
     background-color: #308EF2 !important;
+    width: 200px!important;
 }
 
 .saveChanges:hover{

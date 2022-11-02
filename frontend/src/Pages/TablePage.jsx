@@ -97,6 +97,7 @@ const TablePage = () => {
     event.preventDefault();
   };
   const onClick = (event) =>{
+    setModal(true)
     const a = JSON.parse(JSON.stringify(contentFromBase));
     a[a.length] = [['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'], ['-'], ['-'], ['-'], ['-'], ['-'], ['-'], ['-'], ['-'],]
     setContentFromBase(a)
@@ -197,7 +198,7 @@ const TablePage = () => {
 
               {modal && <Button
                   className="saveChanges"
-                  style={{marginLeft: "87%", marginTop: "2%"}}
+                  style={{marginLeft: "83%", marginTop: "2%"}}
                   variant="primary"
                   type="submit"
               >
