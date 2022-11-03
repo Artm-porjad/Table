@@ -71,8 +71,14 @@ async def get_table(request):
                         row_to_send.append(str(row[0]))
                     elif i == 10:
                         row_to_send.append(row[10].strftime("%d.%m.%Y"))
+                    elif i == 12:
+                        row_to_send.append(row[12].strftime("%d.%m.%Y"))
+                    elif i == 13:
+                        row_to_send.append(row[13].strftime("%d.%m.%Y"))
                     elif i == 17:
                         row_to_send.append(row[17].strftime("%d.%m.%Y"))
+                    elif i == 18:
+                        row_to_send.append(row[18].strftime("%d.%m.%Y"))
                     else:
                         row_to_send.append(row[i])
                 except (IndexError, AttributeError):
