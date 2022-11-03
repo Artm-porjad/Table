@@ -25,8 +25,6 @@ services:
     container_name: test-backend1
     networks:
       - test1
-    links:
-      - postgresql
 
   frontend:
     depends_on:
