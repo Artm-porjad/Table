@@ -38,24 +38,27 @@ async def get_table(request):
     c = []
     async with engine.connect() as conn:
         for i in range(23):
-            a = []
-            if i == 2:
-                data = await conn.stream(select_directions_sql())
-                async for row in data:
-                    a.append(str(row[0]))
-            elif i == 5:
-                data = await conn.stream(select_documents_statuses_sql())
-                async for row in data:
-                    a.append(str(row[0]))
-            elif i == 3:
-                data = await conn.stream(select_fed_projects_sql())
-                async for row in data:
-                    a.append(str(row[0]))
-            elif i == 1:
-                data = await conn.stream(select_persons_sql())
-                async for row in data:
-                    a.append(str(row[0]))
-            c.append(a)
+            try:
+                a = []
+                if i == 2:
+                    data = await conn.stream(select_directions_sql())
+                    async for row in data:
+                        a.append(str(row[0]))
+                elif i == 5:
+                    data = await conn.stream(select_documents_statuses_sql())
+                    async for row in data:
+                        a.append(str(row[0]))
+                elif i == 3:
+                    data = await conn.stream(select_fed_projects_sql())
+                    async for row in data:
+                        a.append(str(row[0]))
+                elif i == 1:
+                    data = await conn.stream(select_persons_sql())
+                    async for row in data:
+                        a.append(str(row[0]))
+                c.append(a)
+            except Exception:
+                c.append(a)
     data_to_send.append(c)
     async with engine.connect() as conn:
         data = await conn.stream(select_documents_sql())
@@ -72,7 +75,7 @@ async def get_table(request):
                         row_to_send.append(row[17].strftime("%d.%m.%Y"))
                     else:
                         row_to_send.append(row[i])
-                except IndexError:
+                except (IndexError, AttributeError):
                     row_to_send.append(None)
             data_to_send.append(row_to_send)
         return JSONResponse(data_to_send)
