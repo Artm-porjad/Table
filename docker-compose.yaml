@@ -5,26 +5,28 @@ networks:
     external: true
 
 services:
-  postgresql:
-    image: postgresql1
-    build:
-      context: .
-      dockerfile: docker/postgres/Dockerfile
-    container_name: test-postgresql1
-    command: postgres
-    networks:
-      - test1
+#  postgresql:
+#    image: postgresql1
+#    build:
+#      context: .
+#      dockerfile: docker/postgres/Dockerfile
+#    container_name: test-postgresql1
+#    command: postgres
+#    networks:
+#      - test1
 
   #  backend service
   backend:
-    depends_on:
-      - alembic
+#    depends_on:
+#      - alembic
     build:
       context: .
       dockerfile: docker/website/Dockerfile
     container_name: test-backend1
     networks:
       - test1
+    links:
+      - postgresql
 
   frontend:
     depends_on:
@@ -38,22 +40,22 @@ services:
     ports:
       - "3000:3000"
 
-  alembic:
-    depends_on:
-      - postgresql
-    build:
-      context: .
-      dockerfile: docker/postgres/alembic/Dockerfile
-    container_name: test-alembic1
-    networks:
-      - test1
+#  alembic:
+#    depends_on:
+#      - postgresql
+#    build:
+#      context: .
+#      dockerfile: docker/postgres/alembic/Dockerfile
+#    container_name: test-alembic1
+#    networks:
+#      - test1
 
-  alembic_add_data:
-    depends_on:
-      - alembic
-    build:
-      context: .
-      dockerfile: docker/postgres/alembic/alembic_add_data/Dockerfile
-    container_name: test-alembic-add-data1
-    networks:
-      - test1
+#  alembic_add_data:
+#    depends_on:
+#      - alembic
+#    build:
+#      context: .
+#      dockerfile: docker/postgres/alembic/alembic_add_data/Dockerfile
+#    container_name: test-alembic-add-data1
+#    networks:
+#      - test1
