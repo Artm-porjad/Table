@@ -1,7 +1,7 @@
 from sqlalchemy import text, bindparam
 
 SELECT_DOCUMENTS = '''
-SELECT d.id, p.lastname, dir.name, fp.name, d.doc_type, dc.description, f.short_name, d.document_name, d.regnum_mc, dl.linked_doc, d.incoming_date_mc, d.regnum_incoming, d.yac_control, d.ach_control, d.fin_assessment, d.exp_assessment, d.regnum_out, d.out_date, d.dkr_director_signed_date, d.current_matching
+SELECT d.id, p.lastname, dir.name, fp.name, d.doc_type, dc.description, f.short_name, d.document_name, d.regnum_mc, dl.linked_doc, d.incoming_date_mc, d.regnum_incoming, d.former_minister_control, d.dkr_director_control, d.fin_assessment, d.exp_assessment, d.regnum_out, d.out_date, d.dkr_director_signed_date, d.current_matching
 FROM documents d
 LEFT JOIN foiv f ON d.id_foiv = f.id
 LEFT JOIN directions dir ON f.id_directions = dir.id
@@ -33,7 +33,7 @@ FROM persons p
 '''
 
 INSERT_ROW = '''
-INSERT INTO documents (id, fin_assessment, exp_assessment, id_foiv, id_doc_status, ach_control, yac_control, regnum_mc,
+INSERT INTO documents (id, fin_assessment, exp_assessment, id_foiv, id_doc_status, dkr_director_control, former_minister_control, regnum_mc,
                        regnum_incoming, document_name, regdate_mc, pages_number, incoming_date_mc, out_to_ceki_date,
                        dkr_signed_date, agreement_creation_date, regnum_out, out_date, current_matching,
                        dkr_incoming_date, dkr_director_signed_date, agreement_signed_departments,
@@ -58,15 +58,15 @@ id_foiv AS (
     LEFT JOIN directions d on f.id_directions = d.id
     WHERE p.lastname = :lastname AND d.name = :dir_name
 )
-SELECT :id as id, :fin_assessment as fin_assessment, :exp_assessment as exp_assessment, (SELECT * FROM id_foiv) as id_foiv, (SELECT * FROM id_doc_status) as id_doc_status, :ach_control as ach_control, :yac_control as yac_control, :regnum_mc as reqnum_mc, :regnum_incoming as regnum_incoming, :document_name as document_name, :regdate_mc as regdate_mc, :pages_number as pages_number, :incoming_date_mc as incoming_date_mc, :out_to_ceki_date as out_to_ceki_date, :dkr_signed_date as dkr_signed_date, :agreement_creation_date as agreement_creation_date, :regnum_out as regnum_out, :out_date as out_date, :current_matching as current_matching, :dkr_incoming_date as dkr_incoming_date, :dkr_director_signed_date as dkr_director_signed_date, :agreement_signed_departments as agreement_signed_departments, :agreement_signed_former_minister as agreement_signed_former_minister, :doc_type as doc_type, (SELECT * FROM id_fed_projects) as id_fed_projects, (SELECT * FROM id_foiv_supervisors) as id_foiv_supervisors
+SELECT :id as id, :fin_assessment as fin_assessment, :exp_assessment as exp_assessment, (SELECT * FROM id_foiv) as id_foiv, (SELECT * FROM id_doc_status) as id_doc_status, :dkr_director_control as dkr_director_control, :former_minister_control as former_minister_control, :regnum_mc as reqnum_mc, :regnum_incoming as regnum_incoming, :document_name as document_name, :regdate_mc as regdate_mc, :pages_number as pages_number, :incoming_date_mc as incoming_date_mc, :out_to_ceki_date as out_to_ceki_date, :dkr_signed_date as dkr_signed_date, :agreement_creation_date as agreement_creation_date, :regnum_out as regnum_out, :out_date as out_date, :current_matching as current_matching, :dkr_incoming_date as dkr_incoming_date, :dkr_director_signed_date as dkr_director_signed_date, :agreement_signed_departments as agreement_signed_departments, :agreement_signed_former_minister as agreement_signed_former_minister, :doc_type as doc_type, (SELECT * FROM id_fed_projects) as id_fed_projects, (SELECT * FROM id_foiv_supervisors) as id_foiv_supervisors
 ON CONFLICT (id)
 DO UPDATE
     SET fin_assessment = excluded.fin_assessment,
         exp_assessment = excluded.exp_assessment,
         id_foiv = excluded.id_foiv,
         id_doc_status = excluded.id_doc_status,
-        ach_control = excluded.ach_control,
-        yac_control = excluded.yac_control,
+        dkr_director_control = excluded.dkr_director_control,
+        former_minister_control = excluded.former_minister_control,
         regnum_mc = excluded.regnum_mc,
         regnum_incoming = excluded.regnum_incoming,
         document_name = excluded.document_name,

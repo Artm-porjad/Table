@@ -38,24 +38,27 @@ async def get_table(request):
     c = []
     async with engine.connect() as conn:
         for i in range(23):
-            a = []
-            if i == 2:
-                data = await conn.stream(select_directions_sql())
-                async for row in data:
-                    a.append(str(row[0]))
-            elif i == 5:
-                data = await conn.stream(select_documents_statuses_sql())
-                async for row in data:
-                    a.append(str(row[0]))
-            elif i == 3:
-                data = await conn.stream(select_fed_projects_sql())
-                async for row in data:
-                    a.append(str(row[0]))
-            elif i == 1:
-                data = await conn.stream(select_persons_sql())
-                async for row in data:
-                    a.append(str(row[0]))
-            c.append(a)
+            try:
+                a = []
+                if i == 2:
+                    data = await conn.stream(select_directions_sql())
+                    async for row in data:
+                        a.append(str(row[0]))
+                elif i == 5:
+                    data = await conn.stream(select_documents_statuses_sql())
+                    async for row in data:
+                        a.append(str(row[0]))
+                elif i == 3:
+                    data = await conn.stream(select_fed_projects_sql())
+                    async for row in data:
+                        a.append(str(row[0]))
+                elif i == 1:
+                    data = await conn.stream(select_persons_sql())
+                    async for row in data:
+                        a.append(str(row[0]))
+                c.append(a)
+            except Exception:
+                c.append(a)
     data_to_send.append(c)
     async with engine.connect() as conn:
         data = await conn.stream(select_documents_sql())
@@ -68,11 +71,17 @@ async def get_table(request):
                         row_to_send.append(str(row[0]))
                     elif i == 10:
                         row_to_send.append(row[10].strftime("%d.%m.%Y"))
+                    elif i == 12:
+                        row_to_send.append(row[12].strftime("%d.%m.%Y"))
+                    elif i == 13:
+                        row_to_send.append(row[13].strftime("%d.%m.%Y"))
                     elif i == 17:
                         row_to_send.append(row[17].strftime("%d.%m.%Y"))
+                    elif i == 18:
+                        row_to_send.append(row[18].strftime("%d.%m.%Y"))
                     else:
                         row_to_send.append(row[i])
-                except IndexError:
+                except (IndexError, AttributeError):
                     row_to_send.append(None)
             data_to_send.append(row_to_send)
         return JSONResponse(data_to_send)
@@ -99,8 +108,8 @@ async def post_table(request):
             'id': data[i][0],
             'fin_assessment': data[i][14],
             'exp_assessment': data[i][15],
-            'ach_control': data[i][13],
-            'yac_control': data[i][12],
+            'dkr_director_control': None,
+            'former_minister_control': None,
             'regnum_mc': data[i][8],
             'regnum_incoming': data[i][11],
             'document_name': data[i][7],

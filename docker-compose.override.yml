@@ -1,11 +1,11 @@
 version: '3.2'
 
-services:
+#services:
 
-  postgresql:
-    build:
-      args:
-        POSTGRESQL_PASSWORD: 23456
-    restart: 'no'
-    ports:
-      - "54321:5432/tcp"
+#  postgresql:
+#    build:
+#      args:
+#        POSTGRESQL_PASSWORD: 23456
+#    restart: 'no'
+#    ports:
+#      - "54321:5432/tcp"
