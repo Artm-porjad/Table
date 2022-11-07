@@ -6,6 +6,9 @@ import TableData from "../components/Table";
 import Dropdown from "../components/dropDown";
 import { ExportCSV } from "../components/ExportCSV";
 import logo from '../images/logo.svg'
+import Logo from '../images/Logo.jpg'
+import MyVerticallyCenteredModal from "../components/MyModal";
+import MyModal from "../components/MyModal";
 
 
 
@@ -65,6 +68,7 @@ const typeArr = [
 ];
 
 const TablePage = () => {
+  const [modalShow, setModalShow] = React.useState(false);
   // Первоначальные данные
   const [contentFromBase, setContentFromBase] = useState(data);
   const content2 = JSON.parse(JSON.stringify(contentFromBase));
@@ -96,6 +100,7 @@ const TablePage = () => {
     }).finally(() => console.log(123));
     event.preventDefault();
   };
+
   const onClick = (event) =>{
     setModal(true)
     const a = JSON.parse(JSON.stringify(contentFromBase));
@@ -127,16 +132,16 @@ const TablePage = () => {
     <div className="App">
       <div>
         <div style={{ display:"flex", alignItems: "center" }}>
-          <img src={ logo } style={{ marginLeft: "10px", marginTop: "10px"}} alt="logo" width="25%"/>
+          <img src={ Logo } style={{ marginLeft: "10px", marginTop: "10px"}} alt="logo" width="25%"/>
           <h3 style={{ marginLeft: "15%", color: "#515153" }}>Реестр контроля выполнения экспертиз</h3>
         </div>
 
         {/*<h4 style={{ color: "#515153", marginLeft: "1%", marginTop: "" }}> </h4>*/}
 
         <div style={{ paddingLeft: "0" }} className="flex align-items-center">
-          <div style={{ display:"flex", alignItems:"center", width:"760px"}}>
-            <h5 style={{ color: "#515153", marginLeft: "1%", marginTop: "1%" }}>Департамент цифровой трансформации и координации бюджетных расходов</h5>
-          </div>
+          {/*<div style={{ display:"flex", alignItems:"center", width:"760px"}}>*/}
+          {/*  <h5 style={{ color: "#515153", marginLeft: "1%", marginTop: "1%" }}>Департамент цифровой трансформации и координации бюджетных расходов</h5>*/}
+          {/*</div>*/}
 
           <Button
               className="addButton"
@@ -149,91 +154,151 @@ const TablePage = () => {
           <ExportCSV csvData={contentFromBase} fileName={fileName} />
         </div>
 
-        {modal && (
-          <Modal id="modal" onClose={onClose} title="Документ экспертизы">
+        <MyModal
+            show={modalShow}
+            onHide={() => setModalShow(false)}
+            >
+          <Form onSubmit={onSubmit}>
 
-            <Form onSubmit={onSubmit}>
+                  <div className="container">
+                    <div id="container_1">
+                       <Dropdown
+                          title="СЭД ID"
+                          data={modalRow[0]}
+                          index_column={0}
+                          index_row={modalRowIndex + 1}
+                          content2={content2}
+                          content={contentFromBase}
+                          dropValue={dropArr[0]}
+                          typeArr={typeArr}
+                      />
+                    </div>
 
-              <div className="container">
-                <div id="container_1">
-                   <Dropdown
-                      title="СЭД ID"
-                      data={modalRow[0]}
-                      index_column={0}
-                      index_row={modalRowIndex + 1}
-                      content2={content2}
-                      content={contentFromBase}
-                      dropValue={dropArr[0]}
-                      typeArr={typeArr}
-                  />
-                </div>
+                    <div>
+                      <Button
+                          className="outSad"
+                          variant="primary"
+                          type="submit"
+                          onClick={onClickHandler}
+                      >
+                        Обновить данные из СЭД
+                      </Button>
+                    </div>
+                  </div>
 
-                <div>
-                  <Button
-                      className="outSad"
+                  {modal && title.slice(1).map((nameColumn, key) => {
+                    return (
+                        <Dropdown
+                            title={nameColumn}
+                            data={modalRow.slice(1)[key]}
+                            index_column={key+1}
+                            index_row={modalRowIndex + 1}
+                            key={key}
+                            content2={content2}
+                            content={contentFromBase}
+                            dropValue={dropArr.slice(1)[key]}
+                            typeArr={typeArr}
+                        />
+                    );
+                  })}
+
+                  {modal && <Button
+                      className="saveChanges"
+                      style={{marginLeft: "83%", marginTop: "2%"}}
                       variant="primary"
                       type="submit"
-                      onClick={onClickHandler}
                   >
-                    Обновить данные из СЭД
-                  </Button>
-                </div>
-              </div>
+                    Сохранить изменения
+                  </Button>}
 
-              {modal && title.slice(1).map((nameColumn, key) => {
-                return (
-                    <Dropdown
-                        title={nameColumn}
-                        data={modalRow.slice(1)[key]}
-                        index_column={key+1}
-                        index_row={modalRowIndex + 1}
-                        key={key}
-                        content2={content2}
-                        content={contentFromBase}
-                        dropValue={dropArr.slice(1)[key]}
-                        typeArr={typeArr}
-                    />
-                );
-              })}
+                </Form>
+        </MyModal>
 
-              {modal && <Button
-                  className="saveChanges"
-                  style={{marginLeft: "83%", marginTop: "2%"}}
-                  variant="primary"
-                  type="submit"
-              >
-                Сохранить изменения
-              </Button>}
+        {/*{modal && (*/}
+        {/*  <Modal id="modal" onClose={onClose} title="Документ экспертизы">*/}
 
-            </Form>
+        {/*    <Form onSubmit={onSubmit}>*/}
 
-            {/*{disabled && <Form onSubmit={onSubmit}>*/}
-            {/*  {title.map((nameColumn, key) => {*/}
-            {/*    return (*/}
-            {/*        <Dropdown*/}
-            {/*            title={nameColumn}*/}
-            {/*            data={modalRow[key]}*/}
-            {/*            index_column={key}*/}
-            {/*            index_row={modalRowIndex + 1}*/}
-            {/*            key={key}*/}
-            {/*            content2={content2}*/}
-            {/*            content={contentFromBase}*/}
-            {/*            dropValue={dropArr[key]}*/}
-            {/*            typeArr={typeArr}*/}
-            {/*        />*/}
-            {/*    );*/}
-            {/*  })}*/}
+        {/*      <div className="container">*/}
+        {/*        <div id="container_1">*/}
+        {/*           <Dropdown*/}
+        {/*              title="СЭД ID"*/}
+        {/*              data={modalRow[0]}*/}
+        {/*              index_column={0}*/}
+        {/*              index_row={modalRowIndex + 1}*/}
+        {/*              content2={content2}*/}
+        {/*              content={contentFromBase}*/}
+        {/*              dropValue={dropArr[0]}*/}
+        {/*              typeArr={typeArr}*/}
+        {/*          />*/}
+        {/*        </div>*/}
 
-              {/*<Button*/}
-              {/*    style={{marginLeft: "87%"}}*/}
-              {/*    variant="primary"*/}
-              {/*    type="submit"*/}
-              {/*>*/}
-              {/*  Сохранить изменения*/}
-              {/*</Button>*/}
-            {/*</Form>}*/}
-          </Modal>
-        )}
+        {/*        <div>*/}
+        {/*          <Button*/}
+        {/*              className="outSad"*/}
+        {/*              variant="primary"*/}
+        {/*              type="submit"*/}
+        {/*              onClick={onClickHandler}*/}
+        {/*          >*/}
+        {/*            Обновить данные из СЭД*/}
+        {/*          </Button>*/}
+        {/*        </div>*/}
+        {/*      </div>*/}
+
+        {/*      {modal && title.slice(1).map((nameColumn, key) => {*/}
+        {/*        return (*/}
+        {/*            <Dropdown*/}
+        {/*                title={nameColumn}*/}
+        {/*                data={modalRow.slice(1)[key]}*/}
+        {/*                index_column={key+1}*/}
+        {/*                index_row={modalRowIndex + 1}*/}
+        {/*                key={key}*/}
+        {/*                content2={content2}*/}
+        {/*                content={contentFromBase}*/}
+        {/*                dropValue={dropArr.slice(1)[key]}*/}
+        {/*                typeArr={typeArr}*/}
+        {/*            />*/}
+        {/*        );*/}
+        {/*      })}*/}
+
+        {/*      {modal && <Button*/}
+        {/*          className="saveChanges"*/}
+        {/*          style={{marginLeft: "83%", marginTop: "2%"}}*/}
+        {/*          variant="primary"*/}
+        {/*          type="submit"*/}
+        {/*      >*/}
+        {/*        Сохранить изменения*/}
+        {/*      </Button>}*/}
+
+        {/*    </Form>*/}
+
+        {/*    /!*{disabled && <Form onSubmit={onSubmit}>*!/*/}
+        {/*    /!*  {title.map((nameColumn, key) => {*!/*/}
+        {/*    /!*    return (*!/*/}
+        {/*    /!*        <Dropdown*!/*/}
+        {/*    /!*            title={nameColumn}*!/*/}
+        {/*    /!*            data={modalRow[key]}*!/*/}
+        {/*    /!*            index_column={key}*!/*/}
+        {/*    /!*            index_row={modalRowIndex + 1}*!/*/}
+        {/*    /!*            key={key}*!/*/}
+        {/*    /!*            content2={content2}*!/*/}
+        {/*    /!*            content={contentFromBase}*!/*/}
+        {/*    /!*            dropValue={dropArr[key]}*!/*/}
+        {/*    /!*            typeArr={typeArr}*!/*/}
+        {/*    /!*        />*!/*/}
+        {/*    /!*    );*!/*/}
+        {/*    /!*  })}*!/*/}
+
+        {/*      /!*<Button*!/*/}
+        {/*      /!*    style={{marginLeft: "87%"}}*!/*/}
+        {/*      /!*    variant="primary"*!/*/}
+        {/*      /!*    type="submit"*!/*/}
+        {/*      /!*>*!/*/}
+        {/*      /!*  Сохранить изменения*!/*/}
+        {/*      /!*</Button>*!/*/}
+        {/*    /!*</Form>}*!/*/}
+        {/*  </Modal>*/}
+        {/*)}*/}
       </div>
       <TableData
         typeArr={typeArr}
@@ -242,6 +307,7 @@ const TablePage = () => {
         setModal={setModal}
         setModalRow={setModalRow}
         setModalRowIndex={setModalRowIndex}
+        setModalShow={setModalShow}
       />
 
 

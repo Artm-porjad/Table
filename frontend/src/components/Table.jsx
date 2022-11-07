@@ -1,6 +1,6 @@
 import Table from "react-bootstrap/Table";
 
-const TableData = ({ title, data, setModal, setModalRow, setModalRowIndex }) => {
+const TableData = ({ title, data, setModal, setModalRow, setModalRowIndex, setModalShow }) => {
 
     return (
         <>
@@ -16,6 +16,7 @@ const TableData = ({ title, data, setModal, setModalRow, setModalRowIndex }) => 
                     {data.map((row, key) => {
                         return(
                             <tr onClick={() => {
+                                setModalShow(true)
                                 setModal(true);
                                 setModalRow(row);
                                 setModalRowIndex(key);

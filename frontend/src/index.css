@@ -93,3 +93,7 @@
     margin-right: auto;
     margin-left: auto;
 }
+
+.modal-90w {
+    min-width: 85%;
+}
