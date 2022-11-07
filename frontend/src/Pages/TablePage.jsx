@@ -70,7 +70,7 @@ const typeArr = [
 const TablePage = () => {
   const [modalShow, setModalShow] = React.useState(false);
   // Первоначальные данные
-  const [contentFromBase, setContentFromBase] = useState(data);
+  const [contentFromBase, setContentFromBase] = useState([[], [], []]);
   const content2 = JSON.parse(JSON.stringify(contentFromBase));
   // Состояние модального окна
   const [modal, setModal] = useState(false);
