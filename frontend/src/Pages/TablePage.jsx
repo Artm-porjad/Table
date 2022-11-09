@@ -1,19 +1,16 @@
 import React, {useEffect, useState} from "react";
 import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
-import Modal from "../components/Modal";
 import TableData from "../components/Table";
 import Dropdown from "../components/dropDown";
 import { ExportCSV } from "../components/ExportCSV";
-import logo from '../images/logo.svg'
 import Logo from '../images/Logo.jpg'
-import MyVerticallyCenteredModal from "../components/MyModal";
 import MyModal from "../components/MyModal";
 
 
 
 const data = [
-    ['Ссылка из СЭД', 'Куратор АПРФ', 'Направление', 'Фед.проект', 'Тип документа', 'Текущий статус', 'ФОИВ',
+    ['Ссылка из СЭД', 'Куратор АПРФ', 'Направление', 'Фед. проект', 'Тип документа', 'Текущий статус', 'ФОИВ',
     'Название документа', 'Рег. номер МКС в СЭД', 'В дополнение к или взамен (предыстория документа)',
     'Дата поступления в МКС', 'номер в СЭД', 'Контроль Зам. министра', 'Контроль Чукарин', 'Финансовая оценка, тыс. руб.',
     'Экспертная оценка, тыс. руб.', 'Реквизиты ответа в ведомство', 'Дата ответа в ведомство',
@@ -41,6 +38,31 @@ const data = [
       '$214,124.00', '$32,423.00', null, '02.10.2022', null, null, null, null, null]
 ];
 
+const idArr = [
+    'sed_link',
+    'kurator_APRF',
+    'directions_name',
+    'fp_name',
+    'doc_type',
+    'status_description',
+    'foiv_name',
+    'document_name',
+    'regnum_mc',
+    'linked_doc',
+    'incoming_date_mc',
+    'regnum_incoming',
+    'former_minister_control',
+    'dkr_director_control',
+    'fin_assessment',
+    'exp_assessment',
+    'regnum_out',
+    'out_date',
+    'dkr_director_signed_date',
+    'days_to_dkr_director_signed',
+    'answer_delay',
+    'current_matching',
+    'current_matching_date'
+]
 const typeArr = [
   "text",
   "text",
@@ -67,10 +89,50 @@ const typeArr = [
   "date",
 ];
 
+const obj = {
+  "id": "f19d937f-9e95-4d0c-a9e1-5a660ad7bc98",
+  "fin_assessment": null,
+  "exp_assessment": null,
+  "id_foiv": "6f2fe5c1-f122-401f-a587-72022682c35a",
+  "id_doc_status": "d6e37cdf-226f-4059-bfea-d539efa9280a",
+  "dkr_director_control": "2022-10-13T00:00:00.000Z",
+  "former_minister_control": "2022-11-08T00:00:00.000Z",
+  "regnum_mc": "096-199794047",
+  "regnum_incoming": "Д14/27575-ИС",
+  "document_name": "ТЗ на развитие ЕГИС ОТБ",
+  "regdate_mc": "2022-10-12T00:00:00.000Z",
+  "pages_number": 93,
+  "incoming_date_mc": "2022-10-11T00:00:00.000Z",
+  "out_to_ceki_date": "2022-10-13T00:00:00.000Z",
+  "dkr_signed_date": null,
+  "agreement_creation_date": null,
+  "regnum_out": "нет",
+  "out_date": null,
+  "current_matching": null,
+  "dkr_incoming_date": null,
+  "dkr_director_signed_date": null,
+  "agreement_signed_departments": null,
+  "agreement_signed_former_minister": null,
+  "doc_type": "ТЗ",
+  "id_fed_projects": null,
+  "id_foiv_supervisors": "fb79348c-1170-4122-a5f2-5dd1d7f7e342",
+  "current_matching_date": null,
+  "sed_link": "https://doc.minsvyaz.ru/document.card.php?id=46718575&DNSID=wQlteSRV_yEWSlve8iRlpjA",
+  "recommend_ceki_date": "2022-10-19T00:00:00.000Z",
+  "deadline_mc_date": "2022-11-08T00:00:00.000Z",
+  "kurator_name": "Ермилов Алексей Александрович"
+}
+
 const TablePage = () => {
   const [modalShow, setModalShow] = React.useState(false);
   // Первоначальные данные
-  const [contentFromBase, setContentFromBase] = useState([[], [], []]);
+  const [contentFromBase, setContentFromBase] = useState([['Ссылка из СЭД', 'Куратор АПРФ', 'Направление', 'Фед. проект', 'Тип документа', 'Текущий статус', 'ФОИВ',
+      'Название документа', 'Рег. номер МКС в СЭД', 'В дополнение к или взамен (предыстория документа)',
+      'Дата поступления в МКС', 'номер в СЭД', 'Контроль Зам. министра', 'Контроль Чукарин', 'Финансовая оценка, тыс. руб.',
+      'Экспертная оценка, тыс. руб.', 'Реквизиты ответа в ведомство', 'Дата ответа в ведомство',
+      'Дата подписания (согласования) директором ДКР', 'Осталось ДНЕЙ до подписания Директором ДКР ( - просрок)',
+      'Просрочка ответа в ведомство', 'ФИО согласующего сотрудника МЦ (текущий согласующий)',
+      'Дата поступления текущему согласующему']]);
   const content2 = JSON.parse(JSON.stringify(contentFromBase));
   // Состояние модального окна
   const [modal, setModal] = useState(false);
@@ -78,8 +140,12 @@ const TablePage = () => {
   const [modalRowIndex, setModalRowIndex] = useState(0);
   const [modal2, setModal2] = useState(false)
   const [sad, setSad] = useState(true)
+  const [index, setIndex] = useState(0)
   // Массив выпадающих списков
   const [dropArr, setDropArr] = useState(data[1]);
+  const [json, setJson] = useState(Object.values(obj))
+  //Состояние для модального окна при добавлении новой экспертизы
+  const [modalNew, setModalNew] = useState(false)
   // Заголовки столбцов
   const title = contentFromBase[0];
 
@@ -102,11 +168,15 @@ const TablePage = () => {
   };
 
   const onClick = (event) =>{
-    setModal(true)
+    // setModal(true)
+    setModalShow(true)
+    // setModalNew(true)
     const a = JSON.parse(JSON.stringify(contentFromBase));
-    a[a.length] = [['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'],['-'], ['-'], ['-'], ['-'], ['-'], ['-'], ['-'], ['-'], ['-'],]
+    a[a.length] = ['-','-','-','-','-','-','-','-','-','-','-','-','-','-','-', '-', '-', '-', '-', '-', '-', '-', '-']
+      // a[a.length] = json
     setContentFromBase(a)
   }
+
   useEffect(() => {
     getContent('/api/test').then((data) => {
       setContentFromBase(data);
@@ -116,9 +186,45 @@ const TablePage = () => {
 
   const fileName = "Форма списка";
 
+  const onSubmitHandler = async (event) => {
+    event.preventDefault()
+    try {
+      const res = await fetch('http://172.16.105.30:8000/?id=f19d937f-9e95-4d0c-a9e1-5a660ad7bc98', {
+        method: 'POST',
+        body: JSON.stringify(index)
+      })
+      const json = await res.json();
+      console.log('Успех:', JSON.stringify(json));
+    } catch (error){
+      console.error('Ошибка:', error);
+    }
+
+    // try {
+    //   const response = await fetch('http://172.16.105.30:8000/?id=f19d937f-9e95-4d0c-a9e1-5a660ad7bc98', {
+    //     method: 'GET'
+    //   });
+    //   const json = await response.json();
+    //   console.log('Успех:', JSON.stringify(json));
+    //   const obj = Object.values(json)
+    //   console.log(obj , 'OBJ')
+    // } catch (error) {
+    //   console.error('Ошибка:', error);
+    // }
+  };
+
+  // useEffect(() => {
+  //   getContent('/api/test').then((data) => {
+  //     setContentFromBase(data);
+  //     setDropArr(data[1])
+  //   });
+  // }, [modal2])
+
   const onClickHandler = () => {
-    setModal2(true)
-    setSad(false)
+    getContent('/api/test').then((data) => {
+      setContentFromBase(data);
+      setDropArr(data[1])
+    });
+    setModalShow(false)
   }
 
   const onClose = () => {
@@ -126,7 +232,6 @@ const TablePage = () => {
     setModal2(false)
     setSad(true)
   }
-
 
   return (
     <div className="App">
@@ -158,37 +263,42 @@ const TablePage = () => {
             show={modalShow}
             onHide={() => setModalShow(false)}
             >
+          <Form onSubmit={onSubmitHandler}>
+            { modal && <div className="container">
+              <div id="container_1">
+                <Dropdown
+                    idArr={idArr[0]}
+                    title="СЭД ID"
+                    data={modalRow[0]}
+                    index_column={0}
+                    index_row={modalRowIndex + 1}
+                    content2={content2}
+                    content={contentFromBase}
+                    dropValue={dropArr[0]}
+                    typeArr={typeArr}
+                    setIndex={setIndex}
+                />
+              </div>
+
+              <div>
+                <Button
+                    className="outSad"
+                    variant="primary"
+                    type="submit"
+                    onClick={onClickHandler}
+                >
+                  Обновить данные из СЭД
+                </Button>
+              </div>
+            </div>}
+          </Form>
+
           <Form onSubmit={onSubmit}>
-
-                  <div className="container">
-                    <div id="container_1">
-                       <Dropdown
-                          title="СЭД ID"
-                          data={modalRow[0]}
-                          index_column={0}
-                          index_row={modalRowIndex + 1}
-                          content2={content2}
-                          content={contentFromBase}
-                          dropValue={dropArr[0]}
-                          typeArr={typeArr}
-                      />
-                    </div>
-
-                    <div>
-                      <Button
-                          className="outSad"
-                          variant="primary"
-                          type="submit"
-                          onClick={onClickHandler}
-                      >
-                        Обновить данные из СЭД
-                      </Button>
-                    </div>
-                  </div>
 
                   {modal && title.slice(1).map((nameColumn, key) => {
                     return (
                         <Dropdown
+                            idArr={idArr.slice(1)}
                             title={nameColumn}
                             data={modalRow.slice(1)[key]}
                             index_column={key+1}
@@ -198,6 +308,8 @@ const TablePage = () => {
                             content={contentFromBase}
                             dropValue={dropArr.slice(1)[key]}
                             typeArr={typeArr}
+                            setIndex={setIndex}
+                            obj={obj}
                         />
                     );
                   })}
@@ -207,11 +319,76 @@ const TablePage = () => {
                       style={{marginLeft: "83%", marginTop: "2%"}}
                       variant="primary"
                       type="submit"
+                      onClick={() => {setModalShow(false)}}
                   >
                     Сохранить изменения
                   </Button>}
 
                 </Form>
+
+
+
+          {/*<Form onSubmit={onSubmitHandler}>*/}
+          {/*  {modalNew && <div className="container">*/}
+          {/*    <div id="container_1">*/}
+          {/*      <Dropdown*/}
+          {/*          title="СЭД ID"*/}
+          {/*          data={contentFromBase[0][0]}*/}
+          {/*          index_column={0}*/}
+          {/*          index_row={contentFromBase.length}*/}
+          {/*          content2={content2}*/}
+          {/*          content={contentFromBase}*/}
+          {/*          dropValue={dropArr[0]}*/}
+          {/*          typeArr={typeArr}*/}
+          {/*          setIndex={setIndex}*/}
+          {/*      />*/}
+          {/*    </div>*/}
+
+          {/*    <div>*/}
+          {/*      <Button*/}
+          {/*          className="outSad"*/}
+          {/*          variant="primary"*/}
+          {/*          type="submit"*/}
+          {/*          onClick={onClickHandler}*/}
+          {/*      >*/}
+          {/*        Обновить данные из СЭД*/}
+          {/*      </Button>*/}
+          {/*    </div>*/}
+          {/*  </div>}*/}
+          {/*</Form>*/}
+
+          {/*<Form onSubmit={onSubmit}>*/}
+
+          {/*{modalNew && title.slice(1).map((nameColumn, key) => {*/}
+          {/*  return (*/}
+          {/*  <Dropdown*/}
+          {/*  title={nameColumn}*/}
+          {/*  data={contentFromBase[0].slice(1)[key]}*/}
+          {/*  index_column={key+1}*/}
+          {/*  index_row={contentFromBase.length + 1}*/}
+          {/*  key={key}*/}
+          {/*  content2={content2}*/}
+          {/*  content={contentFromBase}*/}
+          {/*  dropValue={dropArr.slice(1)[key]}*/}
+          {/*  typeArr={typeArr}*/}
+          {/*  setIndex={setIndex}*/}
+          {/*  />*/}
+          {/*  );*/}
+          {/*}) &&*/}
+
+          {/*  <Button*/}
+          {/*    className="saveChanges"*/}
+          {/*    style={{marginLeft: "83%", marginTop: "2%"}}*/}
+          {/*    variant="primary"*/}
+          {/*    type="submit"*/}
+          {/*    onClick={() => {setModalShow(false)}}*/}
+          {/*  >*/}
+          {/*    Сохранить изменения*/}
+          {/*  </Button>}*/}
+
+          {/*</Form>*/}
+
+
         </MyModal>
 
         {/*{modal && (*/}
@@ -308,6 +485,7 @@ const TablePage = () => {
         setModalRow={setModalRow}
         setModalRowIndex={setModalRowIndex}
         setModalShow={setModalShow}
+        idArr={idArr}
       />
 
 

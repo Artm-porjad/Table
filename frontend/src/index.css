@@ -97,3 +97,37 @@
 .modal-90w {
     min-width: 85%;
 }
+
+/*.react-bootstrap-table th[data-row-selection] {*/
+/*    width: 100px !important;*/
+/*}*/
+
+/*thead tr th{*/
+/*    height: 10px!important;*/
+/*    min-width: 300px!important;*/
+/*}*/
+
+#fedProject{
+    min-width: 300px!important;
+}
+
+#nameProject{
+    min-width: 400px!important;
+}
+
+#regNumber{
+    min-width: 100px!important;
+}
+
+
+th{
+    vertical-align: middle!important;
+}
+
+#eighteen{
+    min-width: 200px!important;
+}
+
+#nineteen{
+    min-width: 300px!important;
+}
