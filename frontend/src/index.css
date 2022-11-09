@@ -120,14 +120,18 @@
 }
 
 
-th{
-    vertical-align: middle!important;
-}
+/*th{*/
+/*    vertical-align: middle!important;*/
+/*}*/
 
 #eighteen{
     min-width: 200px!important;
 }
 
 #nineteen{
+    min-width: 300px!important;
+}
+
+#twentytwo{
     min-width: 300px!important;
 }

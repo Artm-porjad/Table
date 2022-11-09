@@ -18,6 +18,8 @@ const TableData = ({ title, data, setModal, setModalRow, setModalRowIndex, setMo
                                 key === 18 ? 'eighteen' : ''
                                 ||
                                 key === 19 ? 'nineteen' : ''
+                                ||
+                                key === 21 ? 'twentytwo' : ''
                                 }
                                 style={{ backgroundColor: "#394458", color: "white"}}
                                 key={key}
