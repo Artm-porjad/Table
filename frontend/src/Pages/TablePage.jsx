@@ -148,6 +148,7 @@ const TablePage = () => {
   const [modalNew, setModalNew] = useState(false)
     //
     const [object, setObject] = useState(obj)
+  const [updateBtn, setUpdateBtn] = useState(false)
   // Заголовки столбцов
   const title = contentFromBase[0];
 
@@ -196,6 +197,7 @@ const TablePage = () => {
         body: JSON.stringify(index)
       })
       const json = await res.json();
+      setObject(json)
       console.log('Успех:', JSON.stringify(json));
     } catch (error){
       console.error('Ошибка:', error);
@@ -207,8 +209,7 @@ const TablePage = () => {
     //   });
     //   const json = await response.json();
     //   console.log('Успех:', JSON.stringify(json));
-    //   const obj = Object.values(json)
-    //   console.log(obj , 'OBJ')
+    //   setObject(json)
     // } catch (error) {
     //   console.error('Ошибка:', error);
     // }
@@ -222,11 +223,7 @@ const TablePage = () => {
   // }, [modal2])
 
   const onClickHandler = () => {
-    getContent('/api/test').then((data) => {
-      setContentFromBase(data);
-      setDropArr(data[1])
-    });
-    setModalShow(false)
+      setUpdateBtn(true)
   }
 
   const onClose = () => {
@@ -264,7 +261,7 @@ const TablePage = () => {
 
         <MyModal
             show={modalShow}
-            onHide={() => setModalShow(false)}
+            onHide={() => {setModalShow(false); setUpdateBtn(false)}}
             >
           <Form onSubmit={onSubmitHandler}>
             { modal && <div className="container">
@@ -281,6 +278,8 @@ const TablePage = () => {
                     typeArr={typeArr}
                     setIndex={setIndex}
                     obj={object}
+                    updateBtn={updateBtn}
+                    setUpdateBtn={setUpdateBtn}
                 />
               </div>
 
@@ -302,7 +301,7 @@ const TablePage = () => {
                   {modal && title.slice(1).map((nameColumn, key) => {
                     return (
                         <Dropdown
-                            idArr={idArr.slice(1)}
+                            idArr={idArr.slice(0)}
                             title={nameColumn}
                             data={modalRow.slice(1)[key]}
                             index_column={key+1}
@@ -313,7 +312,8 @@ const TablePage = () => {
                             dropValue={dropArr.slice(1)[key]}
                             typeArr={typeArr}
                             setIndex={setIndex}
-
+                            updateBtn={updateBtn}
+                            setUpdateBtn={setUpdateBtn}
                             obj={object}
                         />
                     );
@@ -324,7 +324,7 @@ const TablePage = () => {
                       style={{marginLeft: "83%", marginTop: "2%"}}
                       variant="primary"
                       type="submit"
-                      onClick={() => {setModalShow(false)}}
+                      onClick={() => {setModalShow(false); setUpdateBtn(false)}}
                   >
                     Сохранить изменения
                   </Button>}

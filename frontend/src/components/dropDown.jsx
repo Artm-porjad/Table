@@ -1,12 +1,17 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import 'date-input-polyfill';
 
-const DropDown = ({title, data, index_column, index_row, content2, dropValue, typeArr, setIndex, idArr, obj}) => {
+const DropDown = ({title, data, index_column, index_row, content2, dropValue, typeArr, setIndex, idArr, obj, updateBtn, setUpdateBtn}) => {
     const [result, setResult] = useState(data);
+    // const [result, setResult] = useState(updateBtn && obj.hasOwnProperty(idArr[index_column]) ? obj[idArr[index_column]] : data);
     const [titleDropDown, setTitleDropDown] = useState(data);
     const [typeIndex, setTypeIndex] = useState(typeArr[index_column])
+
+   useEffect(() =>{
+       updateBtn && obj.hasOwnProperty(idArr[index_column]) ? setResult(obj[idArr[index_column]] ): setResult(data)
+   }, [updateBtn])
 
     const handlerSelect= (e)=>{
         setResult(e.target.value);
@@ -23,7 +28,17 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
 
     const inputId = typeIndex === "date" || typeIndex === "number" || index_column === 0 ? "input-date-number" : ''
 
-    // const a = obj.hasOwnProperty(idArr[index_column]) ? setResult(obj.idArr[index_column]) : console.log('')
+    // console.log(idArr[index_column])
+
+    // if(obj.hasOwnProperty(idArr[index_column])) {
+    //     let value = obj[idArr[index_column]];
+    //     console.log('', typeof(value), value)
+    // }
+
+    // const value = obj.hasOwnProperty(idArr[index_column]) ? obj[idArr[index_column]] : data
+    // setResult(value)
+
+    // setResult(value)
 
 
     return (
@@ -33,7 +48,7 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
                 {dropValue.length === 0 && <Form.Control
                     disabled={false}
                     className={inputId}
-                    id={idArr}
+                    id={idArr[index_column]}
                     name="text"
                     type={typeArr[index_column]}
                     value={result}
