@@ -1,6 +1,4 @@
 import React, {useState} from "react";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import 'date-input-polyfill';
@@ -25,13 +23,17 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
 
     const inputId = typeIndex === "date" || typeIndex === "number" || index_column === 0 ? "input-date-number" : ''
 
+    // const a = obj.hasOwnProperty(idArr[index_column]) ? setResult(obj.idArr[index_column]) : console.log('')
+
+
     return (
         <div style={{paddingTop: "17px"}}>
             <Form.Label>{title}</Form.Label>
             <InputGroup >
                 {dropValue.length === 0 && <Form.Control
                     disabled={false}
-                    id={inputId}
+                    className={inputId}
+                    id={idArr}
                     name="text"
                     type={typeArr[index_column]}
                     value={result}
@@ -63,7 +65,7 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
                         // onChange={() => setResult(titleDropDown)}
                     >
                         <option>
-
+                            {result}
                         </option>
                         {dropValue.map((value, key) => {
                             return (<option key={key}>{value}</option> )

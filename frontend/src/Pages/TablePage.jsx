@@ -146,6 +146,8 @@ const TablePage = () => {
   const [json, setJson] = useState(Object.values(obj))
   //Состояние для модального окна при добавлении новой экспертизы
   const [modalNew, setModalNew] = useState(false)
+    //
+    const [object, setObject] = useState(obj)
   // Заголовки столбцов
   const title = contentFromBase[0];
 
@@ -233,6 +235,7 @@ const TablePage = () => {
     setSad(true)
   }
 
+
   return (
     <div className="App">
       <div>
@@ -277,6 +280,7 @@ const TablePage = () => {
                     dropValue={dropArr[0]}
                     typeArr={typeArr}
                     setIndex={setIndex}
+                    obj={object}
                 />
               </div>
 
@@ -309,7 +313,8 @@ const TablePage = () => {
                             dropValue={dropArr.slice(1)[key]}
                             typeArr={typeArr}
                             setIndex={setIndex}
-                            obj={obj}
+
+                            obj={object}
                         />
                     );
                   })}
