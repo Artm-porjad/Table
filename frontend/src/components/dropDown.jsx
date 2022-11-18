@@ -1,21 +1,22 @@
 import React, {useEffect, useState} from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import 'date-input-polyfill';
 
-const DropDown = ({title, data, index_column, index_row, content2, dropValue, typeArr, setIndex, idArr, obj, updateBtn, setUpdateBtn}) => {
+const DropDown = ({title, data, index_column, index_row, content2, dropValue, typeArr, setIndex, idArr, obj, updateBtn, setUpdateBtn, countChanges, setCountChanges }) => {
     const [result, setResult] = useState(data);
     // const [result, setResult] = useState(updateBtn && obj.hasOwnProperty(idArr[index_column]) ? obj[idArr[index_column]] : data);
     const [titleDropDown, setTitleDropDown] = useState(data);
     const [typeIndex, setTypeIndex] = useState(typeArr[index_column])
+    const [res, setRes] = useState(data)
 
    useEffect(() =>{
        updateBtn && obj.hasOwnProperty(idArr[index_column]) ? setResult(obj[idArr[index_column]] ): setResult(data)
    }, [updateBtn])
 
-    const handlerSelect= (e)=>{
+    const handlerSelect = (e) =>{
         setResult(e.target.value);
-        setTitleDropDown(e)
+        setTitleDropDown(e);
+        setCountChanges(true);
     }
 
     index_column === 0 ? setIndex(data) : console.log('')
@@ -24,6 +25,7 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
 
     const onChange = (e)=>{
         setResult(e.currentTarget.value);
+        setCountChanges(true);
     }
 
     const inputId = typeIndex === "date" || typeIndex === "number" || index_column === 0 ? "input-date-number" : ''
@@ -72,7 +74,9 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
                 {/*    </DropdownButton>*/}
                 {/*</>}*/}
 
-                {dropValue.length !== 0 &&
+
+
+                {result === '-' && dropValue.length !== 0 &&
                     <Form.Select
                         className="selector"
                         aria-label="Default select example"
@@ -82,6 +86,19 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
                         <option>
                             {result}
                         </option>
+                        {dropValue.map((value, key) => {
+                            return (<option key={key}>{value}</option> )
+                        })}
+                    </Form.Select>}
+
+                {result !== '-' && dropValue.length !== 0 &&
+                    <Form.Select
+                        className="selector"
+                        aria-label="Default select example"
+                        onChange={handlerSelect}
+                        value={result}
+                        // onChange={() => setResult(titleDropDown)}
+                    >
                         {dropValue.map((value, key) => {
                             return (<option key={key}>{value}</option> )
                         })}

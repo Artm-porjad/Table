@@ -1,6 +1,6 @@
 import Table from "react-bootstrap/Table";
 
-const TableData = ({ title, data, setModal, setModalRow, setModalRowIndex, setModalShow, idArr }) => {
+const TableData = ({ title, data, setModal, setModalRow, setModalRowIndex, setModalShow, idArr, setModalNew,setDel, setCountChanges }) => {
 
     return (
         <>
@@ -37,6 +37,9 @@ const TableData = ({ title, data, setModal, setModalRow, setModalRowIndex, setMo
                                 setModal(true);
                                 setModalRow(row);
                                 setModalRowIndex(key);
+                                setModalNew(false);
+                                setDel(false);
+                                setCountChanges(false);
                             }} key={key}>
                                 {row.map((nameColumn2, key)=>{
                                     return <td key={idArr[key]}>{nameColumn2}</td>

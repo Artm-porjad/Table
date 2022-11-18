@@ -98,6 +98,24 @@
     min-width: 85%;
 }
 
+.modal-30w {
+    min-width: 30%;
+}
+
+/*element.style{*/
+/*    display: flex;*/
+/*}*/
+
+#modal-b{
+    /*display: flex;*/
+    /*align-items: start;*/
+    position: absolute;
+    top: -3%;
+    right: 1%;
+}
+
+
+
 /*.react-bootstrap-table th[data-row-selection] {*/
 /*    width: 100px !important;*/
 /*}*/
@@ -134,4 +152,19 @@
 
 #twentytwo{
     min-width: 300px!important;
+}
+
+#colum{
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnSave{
+    background-color: #308EF2!important;
+    height: 2rem!important;
+    width: 5rem!important;
+}
+
+.btnSave:hover{
+    background-color: #007BFF !important;
 }

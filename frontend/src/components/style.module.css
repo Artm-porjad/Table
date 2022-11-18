@@ -1,0 +1,145 @@
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+
+.container {
+    margin: 3rem 5rem 0rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.title__container {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    margin-right: 3rem;
+}
+
+.p {
+    margin-bottom: 0;
+    display: block;
+    height: 2rem;
+    width: 10rem;
+    padding-top: 4px;
+    border-radius: 15px;
+    background-color: #00cc99;
+    color: white;
+    text-align: center;
+}
+
+.button {
+    height: 2.5rem;
+    width: 20rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    background-color: #008ae6;
+    border-color: transparent;
+    color: white;
+    font-weight: bold;
+    transition: .4s;
+
+}
+
+.button:hover {
+    background-color: #007BFF!important;
+    transition: .4s;
+}
+
+.input__container {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: .5rem;
+}
+
+.input__group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.input__item {
+    height: 2.5rem;
+    border: 1px solid #008080;
+    border-radius: 5px;
+    padding: .7rem;
+    outline-color: grey;
+
+}
+
+.select__container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+}
+
+.select0__group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+    margin-bottom: .5rem;
+    width: 50%;
+}
+
+.select0__group:last-child {
+    margin-right: 0;
+}
+
+.select__group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.select {
+    height: 2.5rem;
+    width: 100%;
+    border: 1px solid #008080;
+    border-radius: 5px;
+    background-color: white;
+    outline-color: grey;
+}
+
+.label {
+    margin-bottom: .5rem;
+}
+
+.table__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.table {
+    width: 100%;
+}
+
+.th {
+    width: 50%;
+}
+
+.col__left {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.col__right {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+
+.columns {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.table__right {
+    margin-top: 1rem;
+}
