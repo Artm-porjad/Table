@@ -47,7 +47,7 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
         <div style={{paddingTop: "17px"}}>
             <Form.Label>{title}</Form.Label>
             <InputGroup >
-                {dropValue.length === 0 && <Form.Control
+                {dropValue.length === 0 && index_column !== 3  && <Form.Control
                     disabled={false}
                     className={inputId}
                     id={idArr[index_column]}
@@ -74,9 +74,17 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
                 {/*    </DropdownButton>*/}
                 {/*</>}*/}
 
+                {index_column === 3 && <textarea style={{
+                        minWidth: "100%",
+                        border: "1px solid #edf2f9",
+                        padding: "9px 16px"
+                    }}
+                    onChange={handlerSelect}>{result}</textarea>
+                }
 
 
-                {result === '-' && dropValue.length !== 0 &&
+
+                {result === '-' && index_column !==3 && dropValue.length !== 0 &&
                     <Form.Select
                         className="selector"
                         aria-label="Default select example"
@@ -91,7 +99,7 @@ const DropDown = ({title, data, index_column, index_row, content2, dropValue, ty
                         })}
                     </Form.Select>}
 
-                {result !== '-' && dropValue.length !== 0 &&
+                {result !== '-' && index_column !== 3 && dropValue.length !== 0 &&
                     <Form.Select
                         className="selector"
                         aria-label="Default select example"

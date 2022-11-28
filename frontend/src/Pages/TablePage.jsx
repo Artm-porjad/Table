@@ -40,6 +40,28 @@ const data = [
         '$214,124.00', '$32,423.00', null, '02.10.2022', null, null, null, null, null]
 ];
 
+const data2 = [
+    ['Тип/СЭД Статус','Федеральный проект ФОИВ', 'Рег. номер МЦ в СЭД (Входящий №)', 'Контроль','Дата исходящего в ЦЭКИ',
+        'Рекомендуемый / Крайний срок рассмотрения ЦЭКИ', 'Куратор','Ответ в ведомство',
+        'Осталось дней до подписания Директором ДКР ( - просрок)', 'Просрочка ответа в ведомство','Текущий согласующий(ФИО/Дата)'],
+    [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [], [], [], [], []
+    ],
+    ['НПА', '46722689', 'Исполнено', 'ППРФ «Об утверждении Положения о федеральной государственной информационной системе ведения Единого государственного реестра недвижимости»', 'Росреестр', 'Хуснуллин М.Ш.', '13-8883-АБ/22 (107-199794832)',
+        '02.11.2022', '01.11.2022', '14.10.2022', '20.10.2022', '01.11.2022', '', 'П8-1-02-107-80637', '03.11.2022', '', '','Сергиенко Л.С.'],
+    ['НПА', '46722689', 'Не исполнено', 'ППРФ «Об утверждении Правил аккредитации юридических лиц для проведения оценки уязвимости объектов транспортной инфраструктуры и транспортных средств и признании утратившими силу некоторых актов Правительства Российской Федерации и отдельных положений некоторых актов Правительства Российской Федерации»', 'Росреестр', 'Хуснуллин М.Ш.', '13-8883-АБ/22 (107-199794832)',
+        '01.11.2022', '01.11.2022', '14.10.2022', '20.10.2022', '01.11.2022', '','П8-1-02-107-80637', '03.11.2022', '', '', 'Сергиенко Л.С.'],
+    ['ТЗ', '46722689', 'Исполнено', 'ППРФ «Об утверждении Положения о федеральной государственной информационной системе ведения Единого государственного реестра недвижимости»', 'Росреестр', 'Хуснуллин М.Ш.', '13-8883-АБ/22 (107-199794832)',
+        '01.11.2022', '01.11.2022', '14.10.2022', '20.10.2022', '01.11.2022', '', 'П8-1-02-107-80637', '03.11.2022', '', '', 'Сергиенко Л.С.']
+]
+
 const idArr = [
     'sed_link',
     'kurator_APRF',
@@ -65,6 +87,22 @@ const idArr = [
     'current_matching',
     'current_matching_date'
 ]
+
+const idArr2 = [
+    'sed_link',
+    'kurator_APRF',
+    'directions_name',
+    'project_name',
+    'fp_name',
+    'doc_type',
+    'status_description',
+    'foiv_name',
+    'document_name',
+    'regnum_mc',
+    'linked_doc',
+    'incoming_date_mc'
+]
+
 const typeArr = [
     "text",
     "text",
@@ -128,13 +166,7 @@ const obj = {
 const TablePage = () => {
     const [modalShow, setModalShow] = React.useState(false);
     // Первоначальные данные
-    const [contentFromBase, setContentFromBase] = useState([['Ссылка из СЭД', 'Куратор АПРФ', 'Направление', 'Фед. проект', 'Тип документа', 'Текущий статус', 'ФОИВ',
-        'Название документа', 'Рег. номер МКС в СЭД', 'В дополнение к или взамен (предыстория документа)',
-        'Дата поступления в МКС', 'номер в СЭД', 'Контроль Зам. министра', 'Контроль Чукарин', 'Финансовая оценка, тыс. руб.',
-        'Экспертная оценка, тыс. руб.', 'Реквизиты ответа в ведомство', 'Дата ответа в ведомство',
-        'Дата подписания (согласования) директором ДКР', 'Осталось ДНЕЙ до подписания Директором ДКР ( - просрок)',
-        'Просрочка ответа в ведомство', 'ФИО согласующего сотрудника МЦ (текущий согласующий)',
-        'Дата поступления текущему согласующему']]);
+    const [contentFromBase, setContentFromBase] = useState(data2);
     const content2 = JSON.parse(JSON.stringify(contentFromBase));
     // Состояние модального окна
     const [modal, setModal] = useState(false);
@@ -236,29 +268,52 @@ const TablePage = () => {
 
     return (
         <div className="App">
-            <div>
-                <div style={{display: "flex", alignItems: "center"}}>
-                    <img src={Logo} style={{marginLeft: "10px", marginTop: "10px"}} alt="logo" width="25%"/>
-                    <h3 style={{marginLeft: "15%", color: "#515153"}}>Реестр контроля выполнения экспертиз</h3>
+            <div className="header">
+
+                {/*-----------------------------------СНИЗУ РАБОЧАЯ ШАПКА ТАБЛИЦЫ-----------------------------------------*/}
+
+                {/*<div style={{display: "flex", alignItems: "center"}}>*/}
+                {/*    <img src={Logo} style={{marginLeft: "10px", marginTop: "10px"}} alt="logo" width="25%"/>*/}
+                {/*    <h3 style={{marginLeft: "15%", color: "#515153"}}>Реестр контроля выполнения экспертиз</h3>*/}
+                {/*</div>*/}
+
+                {/*/!*<h4 style={{ color: "#515153", marginLeft: "1%", marginTop: "" }}> </h4>*!/*/}
+
+                {/*<div style={{paddingLeft: "0"}} className="flex align-items-center">*/}
+                {/*    /!*<div style={{ display:"flex", alignItems:"center", width:"760px"}}>*!/*/}
+                {/*    /!*  <h5 style={{ color: "#515153", marginLeft: "1%", marginTop: "1%" }}>Департамент цифровой трансформации и координации бюджетных расходов</h5>*!/*/}
+                {/*    /!*</div>*!/*/}
+
+                {/*    <Button*/}
+                {/*        className="addButton"*/}
+                {/*        style={{margin: "1% 1% 1% 5px"}}*/}
+                {/*        onClick={onClick}*/}
+                {/*    >*/}
+                {/*        <b style={{paddingRight: "5px"}}>+</b>Добавить новую экспертизу*/}
+                {/*    </Button>*/}
+
+                {/*    <ExportCSV csvData={contentFromBase} fileName={fileName}/>*/}
+                {/*</div>*/}
+
+                {/*---------------------------------------СВЕРХУ РАБОЧИЙ КОД---------------------------------------------------------------*/}
+
+                {/*---------------------------------------СНИЗУ ПРАВИЛЬНАЯ ШАПКА---------------------------------------------------------------*/}
+
+                <div style={{ display:"flex", alignItems: "center" }}>
+                    <img src={ Logo } style={{ marginLeft: "10px"}} alt="logo" width="16%"/>
+                    <div style={{ marginLeft:"4%"}} className="flex align-items-center">
+                        <Button
+                            className="addButton"
+                            onClick={onClick}
+                        >
+                            <b style={{ paddingRight: "5px"}}>+</b>Добавить новую экспертизу
+                        </Button>
+                    </div>
+
+                    <h3 style={{marginLeft:"5%", color: "#72849a", fontSize:"22px", fontWeight:"normal"}}>Реестр контроля выполнения экспертиз</h3>
                 </div>
 
-                {/*<h4 style={{ color: "#515153", marginLeft: "1%", marginTop: "" }}> </h4>*/}
-
-                <div style={{paddingLeft: "0"}} className="flex align-items-center">
-                    {/*<div style={{ display:"flex", alignItems:"center", width:"760px"}}>*/}
-                    {/*  <h5 style={{ color: "#515153", marginLeft: "1%", marginTop: "1%" }}>Департамент цифровой трансформации и координации бюджетных расходов</h5>*/}
-                    {/*</div>*/}
-
-                    <Button
-                        className="addButton"
-                        style={{margin: "1% 1% 1% 5px"}}
-                        onClick={onClick}
-                    >
-                        <b style={{paddingRight: "5px"}}>+</b>Добавить новую экспертизу
-                    </Button>
-
-                    <ExportCSV csvData={contentFromBase} fileName={fileName}/>
-                </div>
+                {/*------------------------------------------СВЕРХУ ПРАВИЛЬНАЯ ШАПКА---------------------------------------------------------------*/}
 
                 <MyModal
                     show={modalShow}
@@ -266,165 +321,168 @@ const TablePage = () => {
                         // setModalShow(false);
                         // setModalShow(false);
                         countChanges ? setSaveChanges(true) : setModalShow(false) && setModalShow(false);
-                        !countChanges && contentFromBase[contentFromBase.length - 1][0] === '-' ? setContentFromBase(contentFromBase.slice(0, -1)) : setContentFromBase(contentFromBase);
+                        !countChanges && contentFromBase[contentFromBase.length - 1][1] === '-' ? setContentFromBase(contentFromBase.slice(0, -1)) : setContentFromBase(contentFromBase);
                         // count !== 0 && contentFromBase[contentFromBase.length-1][0] === '-' ? setContentFromBase(contentFromBase.slice(0, -1)) : setContentFromBase(contentFromBase)
                     }}
+                    index_row={modalRowIndex + 2}
+                    data={modalRow.slice(5)}
+                    dat={data2}
                 >
-                    <Form onSubmit={onSubmitHandler}>
-                        {modal && <div className="container">
-                            <div id="container_1">
-                                <Dropdown
-                                    idArr={idArr[0]}
-                                    title="СЭД ID"
-                                    data={modalRow[0]}
-                                    index_column={0}
-                                    index_row={modalRowIndex + 1}
-                                    content2={content2}
-                                    content={contentFromBase}
-                                    dropValue={dropArr[0]}
-                                    typeArr={typeArr}
-                                    setIndex={setIndex}
-                                    obj={object}
-                                    updateBtn={updateBtn}
-                                    setUpdateBtn={setUpdateBtn}
-                                    countChanges={countChanges}
-                                    setCountChanges={setCountChanges}
-                                />
-                            </div>
+                    {/*<Form onSubmit={onSubmitHandler}>*/}
+                    {/*    {modal && <div className="container">*/}
+                    {/*        <div id="container_1">*/}
+                    {/*            <Dropdown*/}
+                    {/*                idArr={idArr[0]}*/}
+                    {/*                title="СЭД ID"*/}
+                    {/*                data={modalRow[0]}*/}
+                    {/*                index_column={0}*/}
+                    {/*                index_row={modalRowIndex + 1}*/}
+                    {/*                content2={content2}*/}
+                    {/*                content={contentFromBase}*/}
+                    {/*                dropValue={dropArr[0]}*/}
+                    {/*                typeArr={typeArr}*/}
+                    {/*                setIndex={setIndex}*/}
+                    {/*                obj={object}*/}
+                    {/*                updateBtn={updateBtn}*/}
+                    {/*                setUpdateBtn={setUpdateBtn}*/}
+                    {/*                countChanges={countChanges}*/}
+                    {/*                setCountChanges={setCountChanges}*/}
+                    {/*            />*/}
+                    {/*        </div>*/}
 
-                            <div>
-                                <Button
-                                    className="outSad"
-                                    variant="primary"
-                                    type="submit"
-                                    onClick={onClickHandler}
-                                >
-                                    Обновить данные из СЭД
-                                </Button>
-                            </div>
-                        </div>}
-                    </Form>
+                    {/*        <div>*/}
+                    {/*            <Button*/}
+                    {/*                className="outSad"*/}
+                    {/*                variant="primary"*/}
+                    {/*                type="submit"*/}
+                    {/*                onClick={onClickHandler}*/}
+                    {/*            >*/}
+                    {/*                Обновить данные из СЭД*/}
+                    {/*            </Button>*/}
+                    {/*        </div>*/}
+                    {/*    </div>}*/}
+                    {/*</Form>*/}
 
-                    <Form onSubmit={onSubmit}>
+                    {/*<Form onSubmit={onSubmit}>*/}
 
-                        {modal && title.slice(1).map((nameColumn, key) => {
-                            return (
-                                <Dropdown
-                                    idArr={idArr.slice(0)}
-                                    title={nameColumn}
-                                    data={modalRow.slice(1)[key]}
-                                    index_column={key + 1}
-                                    index_row={modalRowIndex + 1}
-                                    key={key}
-                                    content2={content2}
-                                    content={contentFromBase}
-                                    dropValue={dropArr.slice(1)[key]}
-                                    typeArr={typeArr}
-                                    setIndex={setIndex}
-                                    updateBtn={updateBtn}
-                                    setUpdateBtn={setUpdateBtn}
-                                    obj={object}
-                                    countChanges={countChanges}
-                                    setCountChanges={setCountChanges}
-                                />
-                            );
-                        })}
+                    {/*    {modal && title.slice(1).map((nameColumn, key) => {*/}
+                    {/*        return (*/}
+                    {/*            <Dropdown*/}
+                    {/*                idArr={idArr.slice(0)}*/}
+                    {/*                title={nameColumn}*/}
+                    {/*                data={modalRow.slice(1)[key]}*/}
+                    {/*                index_column={key + 1}*/}
+                    {/*                index_row={modalRowIndex + 1}*/}
+                    {/*                key={key}*/}
+                    {/*                content2={content2}*/}
+                    {/*                content={contentFromBase}*/}
+                    {/*                dropValue={dropArr.slice(1)[key]}*/}
+                    {/*                typeArr={typeArr}*/}
+                    {/*                setIndex={setIndex}*/}
+                    {/*                updateBtn={updateBtn}*/}
+                    {/*                setUpdateBtn={setUpdateBtn}*/}
+                    {/*                obj={object}*/}
+                    {/*                countChanges={countChanges}*/}
+                    {/*                setCountChanges={setCountChanges}*/}
+                    {/*            />*/}
+                    {/*        );*/}
+                    {/*    })}*/}
 
-                        {modal && <Button
-                            className="saveChanges"
-                            style={{marginLeft: "83%", marginTop: "2%"}}
-                            variant="primary"
-                            type="submit"
-                            onClick={() => {
-                                setModalShow(false);
-                                setUpdateBtn(false);
-                                setCountChanges(false);
-                            }}
-                        >
-                            Сохранить
-                        </Button>}
+                    {/*    {modal && <Button*/}
+                    {/*        className="saveChanges"*/}
+                    {/*        style={{marginLeft: "83%", marginTop: "2%"}}*/}
+                    {/*        variant="primary"*/}
+                    {/*        type="submit"*/}
+                    {/*        onClick={() => {*/}
+                    {/*            setModalShow(false);*/}
+                    {/*            setUpdateBtn(false);*/}
+                    {/*            setCountChanges(false);*/}
+                    {/*        }}*/}
+                    {/*    >*/}
+                    {/*        Сохранить*/}
+                    {/*    </Button>}*/}
 
-                    </Form>
+                    {/*</Form>*/}
 
-                    {/*Форма при добавлении новой экспертизы*/}
+                    {/*/!*--------------------------------Форма при добавлении новой экспертизы--------------------------------------*!/*/}
 
-                    <Form onSubmit={onSubmitHandler}>
-                        {modalNew && <div className="container">
-                            <div id="container_1">
-                                <Dropdown
-                                    idArr={idArr[0]}
-                                    title="СЭД ID"
-                                    data={contentFromBase[contentFromBase.length - 1][0]}
-                                    index_column={0}
-                                    index_row={contentFromBase.length - 2}
-                                    content2={content2}
-                                    content={contentFromBase}
-                                    dropValue={dropArr[0]}
-                                    typeArr={typeArr}
-                                    setIndex={setIndex}
-                                    obj={object}
-                                    updateBtn={updateBtn}
-                                    setUpdateBtn={setUpdateBtn}
-                                    countChanges={countChanges}
-                                    setCountChanges={setCountChanges}
-                                />
-                            </div>
+                    {/*<Form onSubmit={onSubmitHandler}>*/}
+                    {/*    {modalNew && <div className="container">*/}
+                    {/*        <div id="container_1">*/}
+                    {/*            <Dropdown*/}
+                    {/*                idArr={idArr[0]}*/}
+                    {/*                title="СЭД ID"*/}
+                    {/*                data={contentFromBase[contentFromBase.length - 1][0]}*/}
+                    {/*                index_column={0}*/}
+                    {/*                index_row={contentFromBase.length - 2}*/}
+                    {/*                content2={content2}*/}
+                    {/*                content={contentFromBase}*/}
+                    {/*                dropValue={dropArr[0]}*/}
+                    {/*                typeArr={typeArr}*/}
+                    {/*                setIndex={setIndex}*/}
+                    {/*                obj={object}*/}
+                    {/*                updateBtn={updateBtn}*/}
+                    {/*                setUpdateBtn={setUpdateBtn}*/}
+                    {/*                countChanges={countChanges}*/}
+                    {/*                setCountChanges={setCountChanges}*/}
+                    {/*            />*/}
+                    {/*        </div>*/}
 
-                            <div>
-                                <Button
-                                    className="outSad"
-                                    variant="primary"
-                                    type="submit"
-                                    onClick={onClickHandler}
-                                >
-                                    Обновить данные из СЭД
-                                </Button>
-                            </div>
-                        </div>}
-                    </Form>
+                    {/*        <div>*/}
+                    {/*            <Button*/}
+                    {/*                className="outSad"*/}
+                    {/*                variant="primary"*/}
+                    {/*                type="submit"*/}
+                    {/*                onClick={onClickHandler}*/}
+                    {/*            >*/}
+                    {/*                Обновить данные из СЭД*/}
+                    {/*            </Button>*/}
+                    {/*        </div>*/}
+                    {/*    </div>}*/}
+                    {/*</Form>*/}
 
-                    <Form onSubmit={onSubmit}>
+                    {/*<Form onSubmit={onSubmit}>*/}
 
-                        {modalNew && title.slice(1).map((nameColumn, key) => {
-                            return (
-                                <Dropdown
-                                    idArr={idArr.slice(0)}
-                                    title={nameColumn}
-                                    data={contentFromBase[contentFromBase.length - 1].slice(1)[key]}
-                                    index_column={key + 1}
-                                    index_row={contentFromBase.length - 2}
-                                    key={key}
-                                    content2={content2}
-                                    content={contentFromBase}
-                                    dropValue={dropArr.slice(1)[key]}
-                                    typeArr={typeArr}
-                                    setIndex={setIndex}
-                                    updateBtn={updateBtn}
-                                    setUpdateBtn={setUpdateBtn}
-                                    countChanges={countChanges}
-                                    setCountChanges={setCountChanges}
-                                    obj={object}
-                                />
-                            );
-                        })}
+                    {/*    {modalNew && title.slice(1).map((nameColumn, key) => {*/}
+                    {/*        return (*/}
+                    {/*            <Dropdown*/}
+                    {/*                idArr={idArr.slice(0)}*/}
+                    {/*                title={nameColumn}*/}
+                    {/*                data={contentFromBase[contentFromBase.length - 1].slice(1)[key]}*/}
+                    {/*                index_column={key + 1}*/}
+                    {/*                index_row={contentFromBase.length - 2}*/}
+                    {/*                key={key}*/}
+                    {/*                content2={content2}*/}
+                    {/*                content={contentFromBase}*/}
+                    {/*                dropValue={dropArr.slice(1)[key]}*/}
+                    {/*                typeArr={typeArr}*/}
+                    {/*                setIndex={setIndex}*/}
+                    {/*                updateBtn={updateBtn}*/}
+                    {/*                setUpdateBtn={setUpdateBtn}*/}
+                    {/*                countChanges={countChanges}*/}
+                    {/*                setCountChanges={setCountChanges}*/}
+                    {/*                obj={object}*/}
+                    {/*            />*/}
+                    {/*        );*/}
+                    {/*    })}*/}
 
-                        {modalNew && <Button
-                            className="saveChanges"
-                            style={{marginLeft: "83%", marginTop: "2%"}}
-                            variant="primary"
-                            type="submit"
-                            onClick={() => {
-                                setModalShow(false);
-                                setUpdateBtn(false);
-                                setCountChanges(false);
-                                setCount(0);
-                            }}
-                        >
-                            Сохранить
-                        </Button>}
-                    </Form>
+                    {/*    {modalNew && <Button*/}
+                    {/*        className="saveChanges"*/}
+                    {/*        style={{marginLeft: "83%", marginTop: "2%"}}*/}
+                    {/*        variant="primary"*/}
+                    {/*        type="submit"*/}
+                    {/*        onClick={() => {*/}
+                    {/*            setModalShow(false);*/}
+                    {/*            setUpdateBtn(false);*/}
+                    {/*            setCountChanges(false);*/}
+                    {/*            setCount(0);*/}
+                    {/*        }}*/}
+                    {/*    >*/}
+                    {/*        Сохранить*/}
+                    {/*    </Button>}*/}
+                    {/*</Form>*/}
 
-                    {/*Форма карточки в парвильном варианте*/}
+                    {/*----------------------------------------Форма карточки в парвильном варианте------------------------------------------------------------------*/}
 
                     {/*<Form onSubmit={onSubmitHandler}>*/}
                     {/*    <div className={style.container}>*/}
@@ -675,6 +733,731 @@ const TablePage = () => {
                     {/*    </Button>}*/}
                     {/*</Form>*/}
 
+                {/*------------------------------------СВЕРХУ РАБОЧИЙ КОД-----------------------------------------------------*/}
+
+                    <Form onSubmit={onSubmitHandler}>
+                        {modal &&
+                            <div style={{display: "flex", flexWrap: "wrap", alignItems: "end", marginBottom: "30px"}}>
+                                <div>
+                                    <Dropdown
+                                        idArr={idArr2[0]}
+                                        title="СЭД ID"
+                                        data={modalRow[1]}
+                                        index_column={1}
+                                        index_row={modalRowIndex + 1}
+                                        content2={content2}
+                                        content={contentFromBase}
+                                        dropValue={dropArr[0]}
+                                        typeArr={typeArr}
+                                        setIndex={setIndex}
+                                        obj={object}
+                                        updateBtn={updateBtn}
+                                        setUpdateBtn={setUpdateBtn}
+                                        countChanges={countChanges}
+                                        setCountChanges={setCountChanges}
+                                    />
+                                </div>
+                                <Button
+                                    style={{backgroundColor: "#308EF2", marginLeft: "10px"}}
+                                    variant="primary"
+                                    type="submit"
+                                    onClick={onClickHandler}
+                                >
+                                    Обновить данные из СЭД
+                                </Button>
+                            </div>}
+                    </Form>
+
+                    <Form onSubmit={onSubmit}>
+                        {modal && <div>
+
+                            <div>
+                                <Dropdown
+                                    idArr={idArr[3]}
+                                    title="Название документа"
+                                    data={modalRow[3]}
+                                    index_column={3}
+                                    index_row={modalRowIndex + 1}
+                                    content2={content2}
+                                    content={contentFromBase}
+                                    dropValue={dropArr[3]}
+                                    typeArr={typeArr}
+                                    setIndex={setIndex}
+                                    obj={object}
+                                    updateBtn={updateBtn}
+                                    setUpdateBtn={setUpdateBtn}
+                                    countChanges={countChanges}
+                                    setCountChanges={setCountChanges}
+                                />
+                            </div>
+
+                            {/*<div>*/}
+                            {/*    <label htmlFor="">Название документа</label>*/}
+                            {/*    <textarea style={{*/}
+                            {/*        minWidth: "100%",*/}
+                            {/*        border: "1px solid #edf2f9",*/}
+                            {/*        padding: "9px 16px"*/}
+                            {/*    }}>{ contentFromBase[modalRowIndex+2][3] }</textarea>*/}
+                            {/*</div>*/}
+
+                            <div style={{display: "flex", justifyContent: "space-between"}}>
+                                <div style={{display: "flex", flexDirection: "column", width: "60%"}}
+                                     className="col-left">
+                                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                                        <div style={{minWidth: "300px"}}>
+                                            <Dropdown
+                                                idArr={idArr[1]}
+                                                title="Фед. проект"
+                                                data={modalRow[1]}
+                                                index_column={4}
+                                                index_row={modalRowIndex + 1}
+                                                content2={content2}
+                                                content={contentFromBase}
+                                                dropValue={dropArr[3]}
+                                                typeArr={typeArr}
+                                                setIndex={setIndex}
+                                                obj={object}
+                                                updateBtn={updateBtn}
+                                                setUpdateBtn={setUpdateBtn}
+                                                countChanges={countChanges}
+                                                setCountChanges={setCountChanges}
+                                            />
+                                        </div>
+                                        <div>
+                                            <Dropdown
+                                                idArr={idArr[0]}
+                                                title="Тип документа"
+                                                data={modalRow[0]}
+                                                index_column={0}
+                                                index_row={modalRowIndex + 1}
+                                                content2={content2}
+                                                content={contentFromBase}
+                                                dropValue={dropArr[4]}
+                                                typeArr={typeArr}
+                                                setIndex={setIndex}
+                                                obj={object}
+                                                updateBtn={updateBtn}
+                                                setUpdateBtn={setUpdateBtn}
+                                                countChanges={countChanges}
+                                                setCountChanges={setCountChanges}
+
+                                            />
+
+                                        </div>
+
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Стр.</label>
+                                            <input style={{
+                                                borderRadius: "0.375rem",
+                                                maxWidth: "100px",
+                                                color: "#53535f",
+                                                lineHeight: "1.5",
+                                                padding: "0.55rem 1rem",
+                                                height: "auto",
+                                                fontSize: "0.875rem",
+                                                border: "1px solid #edf2f9",
+                                                backgroundColor: "#e9ecef",
+                                                opacity: "1"
+                                            }} type="text" placeholder="Стр." readOnly/>
+                                        </div>
+                                    </div>
+                                    <div style={{display: "flex", justifyContent: "space-between", marginTop: "25px"}}>
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Рег. номер МЦ в
+                                                СЭД</label>
+                                            <input
+                                                style={{
+                                                    borderRadius: "0.375rem",
+                                                    minWidth: "370px",
+                                                    color: "#53535f",
+                                                    lineHeight: "1.5",
+                                                    padding: "0.55rem 1rem",
+                                                    height: "auto",
+                                                    fontSize: "0.875rem",
+                                                    border: "1px solid #edf2f9",
+                                                    backgroundColor: "#e9ecef",
+                                                    opacity: "1"
+                                                }}
+                                                type="text" placeholder={modalRow[6]} readOnly
+                                            />
+                                        </div>
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Дата</label>
+                                            <input
+                                                style={{
+                                                    borderRadius: "0.375rem",
+                                                    minWidth: "260px",
+                                                    color: "#53535f",
+                                                    lineHeight: "1.5",
+                                                    padding: "0.55rem 1rem",
+                                                    height: "auto",
+                                                    fontSize: "0.875rem",
+                                                    border: "1px solid #edf2f9",
+                                                    backgroundColor: "#e9ecef",
+                                                    opacity: "1"
+                                                }}
+                                                type="text" placeholder={modalRow[7]} readOnly
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div style={{display: "flex", justifyContent: "space-between", marginTop: "25px"}}>
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Входящий №</label>
+                                            <input
+                                                style={{
+                                                    borderRadius: "0.375rem",
+                                                    minWidth: "370px",
+                                                    color: "#53535f",
+                                                    lineHeight: "1.5",
+                                                    padding: "0.55rem 1rem",
+                                                    height: "auto",
+                                                    fontSize: "0.875rem",
+                                                    border: "1px solid #edf2f9",
+                                                    backgroundColor: "#e9ecef",
+                                                    opacity: "1"
+                                                }}
+                                                type="text" placeholder={modalRow[6]} readOnly
+                                            />
+                                        </div>
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Дата</label>
+                                            <input
+                                                style={{
+                                                    borderRadius: "0.375rem",
+                                                    minWidth: "260px",
+                                                    color: "#53535f",
+                                                    lineHeight: "1.5",
+                                                    padding: "0.55rem 1rem",
+                                                    height: "auto",
+                                                    fontSize: "0.875rem",
+                                                    border: "1px solid #edf2f9",
+                                                    backgroundColor: "#e9ecef",
+                                                    opacity: "1"
+                                                }}
+                                                type="text" placeholder={modalRow[7]} readOnly
+                                            />
+                                        </div>
+                                    </div>
+                                    <div style={{display: "flex", flexDirection: "column", marginTop: "10px"}}>
+                                        <div>
+                                            <Dropdown
+                                                idArr={idArr[4]}
+                                                title="В дополнение к или взамен (предыстория документа)"
+                                                data={modalRow[4]}
+                                                index_column={4}
+                                                index_row={modalRowIndex + 1}
+                                                content2={content2}
+                                                content={contentFromBase}
+                                                dropValue={dropArr[4]}
+                                                typeArr={typeArr}
+                                                setIndex={setIndex}
+                                                obj={object}
+                                                updateBtn={updateBtn}
+                                                setUpdateBtn={setUpdateBtn}
+                                                countChanges={countChanges}
+                                                setCountChanges={setCountChanges}
+
+                                            />
+                                            <label style={{marginTop: "25px"}}>Контроль</label>
+                                            <table style={{width: '100%'}} className={` table table-bordered`}>
+                                                <thead>
+                                                <tr className="table-active">
+                                                    <th scope="col">Заместитель Министра</th>
+                                                    <th scope="col">Директор ДКР</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td style={{padding: "12px 5px"}}>
+                                                        <input
+                                                            style={{
+                                                                borderRadius: "0.375rem",
+                                                                minWidth: "100%",
+                                                                color: "#53535f",
+                                                                lineHeight: "1.5",
+                                                                padding: "0.55rem 1rem",
+                                                                height: "auto",
+                                                                fontSize: "0.875rem",
+                                                                border: "1px solid #edf2f9",
+                                                                backgroundColor: "#e9ecef",
+                                                                opacity: "1"
+                                                            }}
+                                                            type="text" placeholder="Заместитель Министра" readOnly
+                                                        />
+                                                    </td>
+                                                    <td style={{padding: "12px 5px"}}>
+                                                        <input
+                                                            style={{
+                                                                borderRadius: "0.375rem",
+                                                                minWidth: "100%",
+                                                                color: "#53535f",
+                                                                lineHeight: "1.5",
+                                                                padding: "0.55rem 1rem",
+                                                                height: "auto",
+                                                                fontSize: "0.875rem",
+                                                                border: "1px solid #edf2f9",
+                                                                backgroundColor: "#e9ecef",
+                                                                opacity: "1"
+                                                            }}
+                                                            type="text" placeholder="Директор ДКР" readOnly
+                                                        />
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <label style={{marginTop: "25px"}}>Сроки</label>
+                                            <table style={{width: '100%'}} className={` table table-bordered`}>
+                                                <thead>
+                                                <tr className="table-active">
+                                                    <th scope="col">Рекомендуемый срок рассм. ЦЭКИ</th>
+                                                    <th scope="col">Крайний срок рассм. МЦ</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{display: "flex", flexDirection: "column", width: "37%", marginTop: "14px"}}
+                                     className="col-right">
+
+                                    <label style={{marginBottom: "0.4rem"}} htmlFor="">ФОИВ</label>
+                                    <input
+                                        style={{
+                                            borderRadius: "0.375rem",
+                                            minWidth: "370px",
+                                            color: "#53535f",
+                                            lineHeight: "1.5",
+                                            padding: "0.55rem 1rem",
+                                            height: "auto",
+                                            fontSize: "0.875rem",
+                                            border: "1px solid #edf2f9",
+                                            backgroundColor: "#e9ecef",
+                                            opacity: "1"
+                                        }}
+                                        type="text" placeholder="ФОИВ" readOnly
+                                    />
+
+                                    <label style={{marginBottom: "0.4rem", marginTop: "25px"}}
+                                           htmlFor="">Куратор</label>
+                                    <input
+                                        style={{
+                                            borderRadius: "0.375rem",
+                                            minWidth: "370px",
+                                            color: "#53535f",
+                                            lineHeight: "1.5",
+                                            padding: "0.55rem 1rem",
+                                            height: "auto",
+                                            fontSize: "0.875rem",
+                                            border: "1px solid #edf2f9",
+                                            backgroundColor: "#e9ecef",
+                                            opacity: "1"
+                                        }}
+                                        type="text" placeholder="" readOnly
+                                    />
+
+
+                                    <label style={{marginTop: "33px"}}>Контроль</label>
+                                    <table style={{width: '100%'}} className={` table table-bordered`}>
+                                        <thead>
+                                        <tr className="table-active">
+                                            <th scope="col">Фио</th>
+                                            <th scope="col">Дата</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                            <div style={{display: "flex", justifyContent: "end"}}>
+                                <Button
+                                    className="saveChanges"
+                                    style={{marginTop: "2%", marginRight: "16px"}}
+                                    variant="primary"
+                                    type="submit"
+                                    onClick={() => {
+                                        setModalShow(false);
+                                        setUpdateBtn(false)
+                                    }}
+                                >
+                                    Сохранить изменения
+                                </Button>
+                            </div>
+                        </div>}
+                    </Form>
+
+                    {/*-----------------------------------СНИЗУ СОЗДАНИЕ НОВОЙ ЭКСПЕРТИЗЫ---------------------------------*/}
+
+                    <Form onSubmit={onSubmitHandler}>
+                        {modalNew &&
+                            <div style={{display: "flex", flexWrap: "wrap", alignItems: "end", marginBottom: "30px"}}>
+                                <div>
+                                    <Dropdown
+                                        idArr={idArr2[0]}
+                                        title="СЭД ID"
+                                        data={contentFromBase[contentFromBase.length - 1][0]}
+                                        index_column={1}
+                                        index_row={contentFromBase.length - 2}
+                                        content2={content2}
+                                        content={contentFromBase}
+                                        dropValue={dropArr[0]}
+                                        typeArr={typeArr}
+                                        setIndex={setIndex}
+                                        obj={object}
+                                        updateBtn={updateBtn}
+                                        setUpdateBtn={setUpdateBtn}
+                                        countChanges={countChanges}
+                                        setCountChanges={setCountChanges}
+                                    />
+                                </div>
+                                <Button
+                                    style={{backgroundColor: "#308EF2", marginLeft: "10px"}}
+                                    variant="primary"
+                                    type="submit"
+                                    onClick={onClickHandler}
+                                >
+                                    Обновить данные из СЭД
+                                </Button>
+                            </div>}
+                    </Form>
+                    <Form onSubmit={onSubmit}>
+                        {modalNew && <div>
+
+                            <div>
+                                <Dropdown
+                                    idArr={idArr[3]}
+                                    title="Название документа"
+                                    data={contentFromBase[contentFromBase.length - 1][3]}
+                                    index_column={3}
+                                    index_row={contentFromBase.length - 2}
+                                    content2={content2}
+                                    content={contentFromBase}
+                                    dropValue={dropArr[3]}
+                                    typeArr={typeArr}
+                                    setIndex={setIndex}
+                                    obj={object}
+                                    updateBtn={updateBtn}
+                                    setUpdateBtn={setUpdateBtn}
+                                    countChanges={countChanges}
+                                    setCountChanges={setCountChanges}
+                                />
+                            </div>
+
+                            <div style={{display: "flex", justifyContent: "space-between"}}>
+                                <div style={{display: "flex", flexDirection: "column", width: "60%"}}
+                                     className="col-left">
+                                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                                        <div style={{minWidth: "300px"}}>
+                                            <Dropdown
+                                                idArr={idArr[3]}
+                                                title="Фед. проект"
+                                                data={contentFromBase[contentFromBase.length-1][4]}
+                                                index_column={4}
+                                                index_row={contentFromBase.length - 2}
+                                                content2={content2}
+                                                content={contentFromBase}
+                                                dropValue={dropArr[3]}
+                                                typeArr={typeArr}
+                                                setIndex={setIndex}
+                                                obj={object}
+                                                updateBtn={updateBtn}
+                                                setUpdateBtn={setUpdateBtn}
+                                                countChanges={countChanges}
+                                                setCountChanges={setCountChanges}
+                                            />
+                                        </div>
+                                        <div>
+                                            <Dropdown
+                                                idArr={idArr[3]}
+                                                title="Тип документа"
+                                                data={contentFromBase[contentFromBase.length-1][0]}
+                                                index_column={0}
+                                                index_row={contentFromBase.length - 2}
+                                                content2={content2}
+                                                content={contentFromBase}
+                                                dropValue={dropArr[0]}
+                                                typeArr={typeArr}
+                                                setIndex={setIndex}
+                                                obj={object}
+                                                updateBtn={updateBtn}
+                                                setUpdateBtn={setUpdateBtn}
+                                                countChanges={countChanges}
+                                                setCountChanges={setCountChanges}
+                                            />
+
+                                        </div>
+
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Стр.</label>
+                                            <input style={{
+                                                borderRadius: "0.375rem",
+                                                maxWidth: "100px",
+                                                color: "#53535f",
+                                                lineHeight: "1.5",
+                                                padding: "0.55rem 1rem",
+                                                height: "auto",
+                                                fontSize: "0.875rem",
+                                                border: "1px solid #edf2f9",
+                                                backgroundColor: "#e9ecef",
+                                                opacity: "1"
+                                            }} type="text" placeholder="Стр." readOnly/>
+                                        </div>
+                                    </div>
+                                    <div style={{display: "flex", justifyContent: "space-between", marginTop: "25px"}}>
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Рег. номер МЦ в
+                                                СЭД</label>
+                                            <input
+                                                style={{
+                                                    borderRadius: "0.375rem",
+                                                    minWidth: "370px",
+                                                    color: "#53535f",
+                                                    lineHeight: "1.5",
+                                                    padding: "0.55rem 1rem",
+                                                    height: "auto",
+                                                    fontSize: "0.875rem",
+                                                    border: "1px solid #edf2f9",
+                                                    backgroundColor: "#e9ecef",
+                                                    opacity: "1"
+                                                }}
+                                                type="text" placeholder={modalRow[6]} readOnly
+                                            />
+                                        </div>
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Дата</label>
+                                            <input
+                                                style={{
+                                                    borderRadius: "0.375rem",
+                                                    minWidth: "260px",
+                                                    color: "#53535f",
+                                                    lineHeight: "1.5",
+                                                    padding: "0.55rem 1rem",
+                                                    height: "auto",
+                                                    fontSize: "0.875rem",
+                                                    border: "1px solid #edf2f9",
+                                                    backgroundColor: "#e9ecef",
+                                                    opacity: "1"
+                                                }}
+                                                type="text" placeholder={modalRow[7]} readOnly
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div style={{display: "flex", justifyContent: "space-between", marginTop: "25px"}}>
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Входящий №</label>
+                                            <input
+                                                style={{
+                                                    borderRadius: "0.375rem",
+                                                    minWidth: "370px",
+                                                    color: "#53535f",
+                                                    lineHeight: "1.5",
+                                                    padding: "0.55rem 1rem",
+                                                    height: "auto",
+                                                    fontSize: "0.875rem",
+                                                    border: "1px solid #edf2f9",
+                                                    backgroundColor: "#e9ecef",
+                                                    opacity: "1"
+                                                }}
+                                                type="text" placeholder={modalRow[6]} readOnly
+                                            />
+                                        </div>
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "end"}}>
+                                            <label style={{marginBottom: "0.4rem"}} htmlFor="">Дата</label>
+                                            <input
+                                                style={{
+                                                    borderRadius: "0.375rem",
+                                                    minWidth: "260px",
+                                                    color: "#53535f",
+                                                    lineHeight: "1.5",
+                                                    padding: "0.55rem 1rem",
+                                                    height: "auto",
+                                                    fontSize: "0.875rem",
+                                                    border: "1px solid #edf2f9",
+                                                    backgroundColor: "#e9ecef",
+                                                    opacity: "1"
+                                                }}
+                                                type="text" placeholder={modalRow[7]} readOnly
+                                            />
+                                        </div>
+                                    </div>
+                                    <div style={{display: "flex", flexDirection: "column", marginTop: "10px"}}>
+                                        <div>
+                                            <Dropdown
+                                                idArr={idArr[4]}
+                                                title="В дополнение к или взамен (предыстория документа)"
+                                                data={modalRow[4]}
+                                                index_column={4}
+                                                index_row={modalRowIndex + 1}
+                                                content2={content2}
+                                                content={contentFromBase}
+                                                dropValue={dropArr[4]}
+                                                typeArr={typeArr}
+                                                setIndex={setIndex}
+                                                obj={object}
+                                                updateBtn={updateBtn}
+                                                setUpdateBtn={setUpdateBtn}
+                                                countChanges={countChanges}
+                                                setCountChanges={setCountChanges}
+
+                                            />
+                                            <label style={{marginTop: "25px"}}>Контроль</label>
+                                            <table style={{width: '100%'}} className={` table table-bordered`}>
+                                                <thead>
+                                                <tr className="table-active">
+                                                    <th scope="col">Заместитель Министра</th>
+                                                    <th scope="col">Директор ДКР</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td style={{padding: "12px 5px"}}>
+                                                        <input
+                                                            style={{
+                                                                borderRadius: "0.375rem",
+                                                                minWidth: "100%",
+                                                                color: "#53535f",
+                                                                lineHeight: "1.5",
+                                                                padding: "0.55rem 1rem",
+                                                                height: "auto",
+                                                                fontSize: "0.875rem",
+                                                                border: "1px solid #edf2f9",
+                                                                backgroundColor: "#e9ecef",
+                                                                opacity: "1"
+                                                            }}
+                                                            type="text" placeholder="Заместитель Министра" readOnly
+                                                        />
+                                                    </td>
+                                                    <td style={{padding: "12px 5px"}}>
+                                                        <input
+                                                            style={{
+                                                                borderRadius: "0.375rem",
+                                                                minWidth: "100%",
+                                                                color: "#53535f",
+                                                                lineHeight: "1.5",
+                                                                padding: "0.55rem 1rem",
+                                                                height: "auto",
+                                                                fontSize: "0.875rem",
+                                                                border: "1px solid #edf2f9",
+                                                                backgroundColor: "#e9ecef",
+                                                                opacity: "1"
+                                                            }}
+                                                            type="text" placeholder="Директор ДКР" readOnly
+                                                        />
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <label style={{marginTop: "25px"}}>Сроки</label>
+                                            <table style={{width: '100%'}} className={` table table-bordered`}>
+                                                <thead>
+                                                <tr className="table-active">
+                                                    <th scope="col">Рекомендуемый срок рассм. ЦЭКИ</th>
+                                                    <th scope="col">Крайний срок рассм. МЦ</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{display: "flex", flexDirection: "column", width: "37%", marginTop: "14px"}}
+                                     className="col-right">
+
+                                    <label style={{marginBottom: "0.4rem"}} htmlFor="">ФОИВ</label>
+                                    <input
+                                        style={{
+                                            borderRadius: "0.375rem",
+                                            minWidth: "370px",
+                                            color: "#53535f",
+                                            lineHeight: "1.5",
+                                            padding: "0.55rem 1rem",
+                                            height: "auto",
+                                            fontSize: "0.875rem",
+                                            border: "1px solid #edf2f9",
+                                            backgroundColor: "#e9ecef",
+                                            opacity: "1"
+                                        }}
+                                        type="text" placeholder="ФОИВ" readOnly
+                                    />
+
+                                    <label style={{marginBottom: "0.4rem", marginTop: "25px"}}
+                                           htmlFor="">Куратор</label>
+                                    <input
+                                        style={{
+                                            borderRadius: "0.375rem",
+                                            minWidth: "370px",
+                                            color: "#53535f",
+                                            lineHeight: "1.5",
+                                            padding: "0.55rem 1rem",
+                                            height: "auto",
+                                            fontSize: "0.875rem",
+                                            border: "1px solid #edf2f9",
+                                            backgroundColor: "#e9ecef",
+                                            opacity: "1"
+                                        }}
+                                        type="text" placeholder="" readOnly
+                                    />
+
+
+                                    <label style={{marginTop: "33px"}}>Контроль</label>
+                                    <table style={{width: '100%'}} className={` table table-bordered`}>
+                                        <thead>
+                                        <tr className="table-active">
+                                            <th scope="col">Фио</th>
+                                            <th scope="col">Дата</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </div>}
+                        {modalNew && <Button
+                            className="saveChanges"
+                            style={{marginLeft: "83%", marginTop: "2%"}}
+                            variant="primary"
+                            type="submit"
+                            onClick={() => {
+                                setModalShow(false);
+                                setUpdateBtn(false);
+                                setCountChanges(false);
+                                setCount(0);
+                            }}
+                        >
+                            Сохранить
+                        </Button>}
+                    </Form>
+
                 </MyModal>
 
                 <CustomModal
@@ -798,36 +1581,44 @@ const TablePage = () => {
                 {/*)}*/}
             </div>
 
-            {/*{isLoading*/}
-            {/*    ? <Spinner />*/}
-            {/*    : <TableData*/}
-            {/*        typeArr={typeArr}*/}
-            {/*        title={title}*/}
-            {/*        data={contentFromBase.slice(2)}*/}
-            {/*        setModal={setModal}*/}
-            {/*        setModalRow={setModalRow}*/}
-            {/*        setModalRowIndex={setModalRowIndex}*/}
-            {/*        setModalShow={setModalShow}*/}
-            {/*        idArr={idArr}*/}
-            {/*        setModalNew={setModalNew}*/}
-            {/*        setDel={setDel}*/}
-            {/*        setCountChanges={setCountChanges}*/}
-            {/*    />*/}
-            {/*}*/}
+            {/*----------------------------------------- СНИЗУ ТАБЛИЦА В ПРАВИЛЬНОМ ВИДЕ------------------------------------------*/}
 
-            <TableData
-                typeArr={typeArr}
-                title={title}
-                data={contentFromBase.slice(2)}
-                setModal={setModal}
-                setModalRow={setModalRow}
-                setModalRowIndex={setModalRowIndex}
-                setModalShow={setModalShow}
-                idArr={idArr}
-                setModalNew={setModalNew}
-                setDel={setDel}
-                setCountChanges={setCountChanges}
-            />
+
+            <div className="main-content" style={{overflow:"hidden", width:"100%"}}>
+                <div className="card" style={{ borderRadius:"0.25rem", border: "1px solid #edf2f9", boxSizing:"border-box" }}>
+                    <div className="card-body" style={{overflowX:"auto",position:"relative", padding:"1.5rem", flex:"1 1 auto", boxSizing:"border-box", marginTop:"25px" }}>
+                        <TableData
+                            typeArr={typeArr}
+                            title={title}
+                            data={contentFromBase.slice(2)}
+                            setModal={setModal}
+                            setModalRow={setModalRow}
+                            setModalRowIndex={setModalRowIndex}
+                            setModalShow={setModalShow}
+                            idArr={idArr}
+                            setModalNew={setModalNew}
+                            setDel={setDel}
+                            setCountChanges={setCountChanges}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/*------------------------------------------Снизу код рабочий---------------------------------------------------*/}
+
+            {/*<TableData*/}
+            {/*    typeArr={typeArr}*/}
+            {/*    title={title}*/}
+            {/*    data={contentFromBase.slice(2)}*/}
+            {/*    setModal={setModal}*/}
+            {/*    setModalRow={setModalRow}*/}
+            {/*    setModalRowIndex={setModalRowIndex}*/}
+            {/*    setModalShow={setModalShow}*/}
+            {/*    idArr={idArr}*/}
+            {/*    setModalNew={setModalNew}*/}
+            {/*    setDel={setDel}*/}
+            {/*    setCountChanges={setCountChanges}*/}
+            {/*/>*/}
 
 
 
